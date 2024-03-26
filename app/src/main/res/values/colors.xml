@@ -6,4 +6,10 @@
     <color name="orange_mainColor">#fff9881f</color>
     <color name="abu_bg">#F7F7FB</color>
     <color name="pink_muda">#F8D3C0</color>
+    <color name="ijo_gelap">#7CC25B</color>
+    <color name="ijo_terang">#EEFFE7</color>
+    <color name="merah_gelap">#C25B5B</color>
+    <color name="merah_terang">#FFD9D9</color>
+    <color name="orange_pudar">#FCC38F</color>
+    <color name="abu_edittext">#EBEDEC</color>
 </resources>

@@ -1,26 +1,33 @@
 package com.example.admin_ndreykitchen.fragment
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.admin_ndreykitchen.MenuModel
 import com.example.admin_ndreykitchen.R
+import com.example.admin_ndreykitchen.adapter.MenuAdapter
+import org.json.JSONArray
+import org.json.JSONException
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MenuFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MenuFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private val menuList = mutableListOf<MenuModel>()
+    private lateinit var rv_menu: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,20 +41,68 @@ class MenuFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rv_menu = view.findViewById(R.id.rv_menu)
+        rv_menu.layoutManager = GridLayoutManager(requireContext(), 1)
+
+        val horizontalSpace = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
+        val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
+        rv_menu.addItemDecoration(SpaceItemDecoration(this, horizontalSpace, verticalSpace))
+
+        // Create an empty adapter and set it to the RecyclerView
+        val menuAdapter = MenuAdapter(menuList)
+        rv_menu.adapter = menuAdapter
+
+        getAllMenus(requireContext())
+    }
+
+    private fun getAllMenus(context: Context) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getAllMenus"
+        val sr = StringRequest(
+            Request.Method.GET,
+            urlEndPoints,
+            Response.Listener { response ->
+                try {
+                    menuList.clear()
+                    val menus = JSONArray(response)
+                    for (i in 0 until menus.length()) {
+                        val menuJson = menus.getJSONObject(i)
+
+                        val id_menu = menuJson.getString("_id")
+                        val nama_menu = menuJson.getString("nama")
+                        val harga_menu = menuJson.getInt("harga")
+                        val images = menuJson.getString("image")
+
+                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images)
+                        menuList.add(menu)
+                    }
+                    Log.d("MenuFragment", "menuList: $menuList")
+                    displayMenu()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+            },
+            Response.ErrorListener { error ->
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
+            }
+        )
+        val requestQueue = Volley.newRequestQueue(context.applicationContext)
+        requestQueue.add(sr)
+    }
+
+
+    private fun displayMenu() {
+        val menuAdapter = MenuAdapter(menuList)
+        rv_menu.adapter = menuAdapter
+    }
+
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MenuFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             MenuFragment().apply {
