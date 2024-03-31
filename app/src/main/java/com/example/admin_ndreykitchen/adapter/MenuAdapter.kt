@@ -1,18 +1,17 @@
 package com.example.admin_ndreykitchen.adapter
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.admin_ndreykitchen.MenuModel
 import com.example.admin_ndreykitchen.R
+import com.example.admin_ndreykitchen.model.MenuModel
+import com.example.admin_ndreykitchen.model.RecordModel
 
-class MenuAdapter(private val menuList: List<MenuModel>) :
+class MenuAdapter(private val menuList: MutableList<MenuModel>) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
     private lateinit var context: Context

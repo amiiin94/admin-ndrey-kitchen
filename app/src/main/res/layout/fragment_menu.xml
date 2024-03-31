@@ -8,110 +8,106 @@
     android:background="@color/abu_bg">
 
     <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/daftar_menu_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Daftar Menu"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/search_menu_edittext"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/rounded_edittext"
-            android:drawableLeft="@drawable/search_icon"
-            android:drawablePadding="12dp"
-            android:hint="Cari menu..."
-            android:paddingHorizontal="20dp"
-            android:paddingVertical="15dp"
-            android:textColorHint="@color/abu"
-            android:textSize="14sp"
-            android:textAlignment="gravity"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/daftar_menu_textview" />
+            android:layout_height="match_parent">
 
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/search_menu_edittext">
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/daftar_menu_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="16dp">
+                android:layout_marginTop="30dp"
+                android:text="Daftar Menu"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <Button
-                    android:id="@+id/AllMerch"
+            <EditText
+                android:id="@+id/search_menu_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/rounded_edittext"
+                android:drawableLeft="@drawable/search_icon"
+                android:drawablePadding="12dp"
+                android:hint="Cari menu..."
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp"
+                android:textAlignment="gravity"
+                android:textColorHint="@color/abu"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/daftar_menu_textview" />
+
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="12dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/search_menu_edittext">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/button_gradien_rounded"
-                    android:text="Merchants"
-                    android:textSize="10sp" />
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp">
 
-                <Button
-                    android:id="@+id/AllMerch1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_gradien_rounded"
-                    android:text="Merchants"
-                    android:textSize="10sp" />
+                    <Button
+                        android:id="@+id/AllMerch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@drawable/button_gradien_rounded"
+                        android:text="Merchants"
+                        android:textSize="10sp" />
 
-                <Button
-                    android:id="@+id/AllMerch2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_gradien_rounded"
-                    android:text="Merchants"
-                    android:textSize="10sp" />
+                    <Button
+                        android:id="@+id/AllMerch1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_gradien_rounded"
+                        android:text="Merchants"
+                        android:textSize="10sp" />
 
-                <Button
-                    android:id="@+id/AllMerch3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_gradien_rounded"
-                    android:text="Merchants"
-                    android:textSize="10sp" />
-            </LinearLayout>
-        </HorizontalScrollView>
+                    <Button
+                        android:id="@+id/AllMerch2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_gradien_rounded"
+                        android:text="Merchants"
+                        android:textSize="10sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="222dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView">
+                    <Button
+                        android:id="@+id/AllMerch3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="10dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_gradien_rounded"
+                        android:text="Merchants"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </HorizontalScrollView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_menu"
@@ -119,10 +115,14 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_weight="1"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </FrameLayout>

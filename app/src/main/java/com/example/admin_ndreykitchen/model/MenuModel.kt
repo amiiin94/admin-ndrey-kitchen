@@ -1,4 +1,4 @@
-package com.example.admin_ndreykitchen
+package com.example.admin_ndreykitchen.model
 
 data class MenuModel(
     val id_menu: String,

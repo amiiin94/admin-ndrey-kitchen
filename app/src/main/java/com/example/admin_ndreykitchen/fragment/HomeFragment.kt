@@ -1,60 +1,75 @@
-package com.example.admin_ndreykitchen.fragment
-
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.R
+import org.json.JSONException
+import org.json.JSONObject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var pemasukan: TextView
+    private lateinit var pengeluaran: TextView
+    private lateinit var total_transaksi: TextView
+    private lateinit var makanan_terjual: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
+        pemasukan = view.findViewById(R.id.pemasukan)
+        pengeluaran = view.findViewById(R.id.pengeluaran)
+        total_transaksi = view.findViewById(R.id.total_transaksi)
+        makanan_terjual = view.findViewById(R.id.makanan_terjual)
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        getHomeFragmentData(requireContext())
+    }
+
+    private fun displayHomeFragmentData(pemasukanAmount: Int, pengeluaranAmount: Int, totalTransaksi: Int, makananTerjual: Int) {
+        pemasukan.text = "IDR $pemasukanAmount"
+        pengeluaran.text = "IDR $pengeluaranAmount"
+        total_transaksi.text = totalTransaksi.toString()
+        makanan_terjual.text = makananTerjual.toString()
+    }
+
+    private fun getHomeFragmentData(context: Context) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getHomeFragmentData"
+        val sr = StringRequest(
+            Request.Method.GET,
+            urlEndPoints,
+            { response ->
+                try {
+                    Log.d("HomeFragmentData", response)
+                    val jsonObject = JSONObject(response)
+
+                    val pemasukanAmount = jsonObject.getInt("pemasukan_all")
+                    val pengeluaranAmount = jsonObject.getInt("pengeluaran_all")
+                    val totalTransaksi = jsonObject.getInt("transaction_all")
+                    val makananTerjual = jsonObject.getInt("quantity_all")
+                    displayHomeFragmentData(pemasukanAmount, pengeluaranAmount, totalTransaksi, makananTerjual)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
+            },
+            { error ->
+                Log.e("Error", error.toString())
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
+        )
+        val requestQueue = Volley.newRequestQueue(context.applicationContext)
+        requestQueue.add(sr)
     }
 }

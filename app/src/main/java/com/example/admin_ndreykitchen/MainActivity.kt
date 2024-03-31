@@ -1,5 +1,7 @@
+
 package com.example.admin_ndreykitchen
 
+import HomeFragment
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,10 +9,9 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.admin_ndreykitchen.databinding.ActivityMainBinding
-import com.example.admin_ndreykitchen.fragment.HomeFragment
 import com.example.admin_ndreykitchen.fragment.MenuFragment
-import com.example.admin_ndreykitchen.fragment.PenjualanFragment
 import com.example.admin_ndreykitchen.fragment.ProfileFragment
+import com.example.admin_ndreykitchen.fragment.RecordFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         val homeFragment = HomeFragment()
         val menuFragment = MenuFragment()
-        val penjualanFragment = PenjualanFragment()
+        val penjualanFragment = RecordFragment()
         val profileFragment = ProfileFragment()
 
         // Set the initially selected item programmatically

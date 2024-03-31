@@ -11,10 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.admin_ndreykitchen.MenuModel
+import com.example.admin_ndreykitchen.model.MenuModel
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.adapter.MenuAdapter
 import org.json.JSONArray
@@ -52,7 +51,7 @@ class MenuFragment : Fragment() {
 
         val horizontalSpace = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
         val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
-        rv_menu.addItemDecoration(SpaceItemDecoration(this, horizontalSpace, verticalSpace))
+        rv_menu.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
         // Create an empty adapter and set it to the RecyclerView
         val menuAdapter = MenuAdapter(menuList)
@@ -66,7 +65,7 @@ class MenuFragment : Fragment() {
         val sr = StringRequest(
             Request.Method.GET,
             urlEndPoints,
-            Response.Listener { response ->
+            { response ->
                 try {
                     menuList.clear()
                     val menus = JSONArray(response)
@@ -87,7 +86,7 @@ class MenuFragment : Fragment() {
                     e.printStackTrace()
                 }
             },
-            Response.ErrorListener { error ->
+            { error ->
                 Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
         )
