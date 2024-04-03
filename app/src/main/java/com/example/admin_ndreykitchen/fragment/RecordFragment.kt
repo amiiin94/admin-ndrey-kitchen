@@ -79,26 +79,28 @@ class RecordFragment : Fragment() {
             urlEndPoints,
             { response ->
                 try {
-                    recordList.clear()
                     val records = JSONArray(response)
-                    for (i in 0 until records.length()) {
-                        val recordJson = records.getJSONObject(i)
+                    if (records.length() > 0) {
+                        recordList.clear()
+                        for (i in 0 until records.length()) {
+                            val recordJson = records.getJSONObject(i)
 
-                        val id_record = recordJson.getString("_id")
-                        val type_record = recordJson.getString("type")
-                        val title_record = recordJson.getString("title")
-                        val amount_record = recordJson.getInt("amount")
-                        val date_record = recordJson.getString("date")
-                        val note_record = recordJson.getString("note")
-                        val quantity_record = recordJson.getInt("quantity")
+                            val id_record = recordJson.getString("_id")
+                            val type_record = recordJson.getString("type")
+                            val title_record = recordJson.getString("title")
+                            val amount_record = recordJson.getInt("amount")
+                            val date_record = recordJson.getString("date")
+                            val note_record = recordJson.getString("note")
+                            val quantity_record = recordJson.getInt("quantity")
 
-                        val formattedHarga: String = formatToRupiah(amount_record)
+                            val formattedHarga: String = formatToRupiah(amount_record)
 
-                        val record = RecordModel(id_record, type_record, title_record, formattedHarga, date_record, note_record, quantity_record)
-                        recordList.add(record)
+                            val record = RecordModel(id_record, type_record, title_record, formattedHarga, date_record, note_record, quantity_record)
+                            recordList.add(record)
+                        }
+                        Log.d("RecordFragment", "recordList: $recordList")
+                        displayMenu()
                     }
-                    Log.d("RecordFragment", "recordList: $recordList")
-                    displayMenu()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -110,6 +112,7 @@ class RecordFragment : Fragment() {
         val requestQueue = Volley.newRequestQueue(context.applicationContext)
         requestQueue.add(sr)
     }
+
 
     private fun displayMenu() {
         val recordAdapter = RecordAdapter(recordList)

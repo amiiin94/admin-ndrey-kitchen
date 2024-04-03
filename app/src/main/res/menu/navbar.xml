@@ -13,7 +13,7 @@
         android:title="" />
 
     <item android:id="@+id/penjualan"
-        android:title="Record"
+        android:title="Transaksi"
         android:icon="@drawable/penjualan_icon" />
 
     <item android:id="@+id/profile"

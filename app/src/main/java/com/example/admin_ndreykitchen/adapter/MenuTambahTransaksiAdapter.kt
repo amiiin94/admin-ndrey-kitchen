@@ -12,8 +12,7 @@ import com.example.admin_ndreykitchen.model.MenuModel
 
 class MenuTambahTransaksiAdapter(
     private val menuList: MutableList<MenuModel>,
-    private val quantityChangeListener: QuantityChangeListener
-) : RecyclerView.Adapter<MenuTambahTransaksiAdapter.ViewHolder>() {
+    private val quantityChangeListener: QuantityChangeListener) : RecyclerView.Adapter<MenuTambahTransaksiAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image_menu: ImageView = itemView.findViewById(R.id.image_menu)

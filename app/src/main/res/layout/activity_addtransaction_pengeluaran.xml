@@ -22,7 +22,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView5"
+                android:id="@+id/back_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -128,7 +128,6 @@
                 android:background="@drawable/abu_bg"
                 android:drawableRight="@drawable/arrow_bottom"
                 android:hint="Pilih Kategori..."
-                android:inputType="none"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="16dp"
                 android:textColorHint="@color/abu"
@@ -266,7 +265,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/catatan_textview" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/loginbtn"
+                android:id="@+id/save_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

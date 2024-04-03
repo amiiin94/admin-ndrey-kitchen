@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -29,7 +30,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
 
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
-    private var totalHarga: Int = 0
+    private lateinit var back_btn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,12 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        back_btn = findViewById(R.id.back_btn)
+        back_btn.setOnClickListener{
+            val back_btn_intent = Intent(this@AddRecordPemasukanActivity, MainActivity::class.java)
+            startActivity((back_btn_intent))
         }
 
         val pengeluaran_btn: Button = findViewById(R.id.pengeluaran_btn)

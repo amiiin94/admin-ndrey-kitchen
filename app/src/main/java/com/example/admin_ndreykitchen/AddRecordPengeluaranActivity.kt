@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,9 +18,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -30,6 +31,8 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
     private lateinit var etDate : EditText
     private var categoryList = mutableListOf<String>()
     private var date: Long = 0
+    private lateinit var back_btn : ImageView
+    private lateinit var save_btn: com.google.android.material.button.MaterialButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +42,12 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        back_btn = findViewById(R.id.back_btn)
+        back_btn.setOnClickListener{
+            val back_btn_intent = Intent(this@AddRecordPengeluaranActivity, MainActivity::class.java)
+            startActivity(back_btn_intent)
         }
 
         etDate = findViewById(R.id.tanggal_editext)
@@ -60,6 +69,12 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         date = currentDate!!.time //initialized date value to current date as the default value
         etDate.setOnClickListener {
             clickDatePicker()
+        }
+
+        //save record
+        save_btn = findViewById(R.id.save_btn)
+        save_btn.setOnClickListener{
+            savePengeluaranRecord()
         }
     }
 
@@ -108,8 +123,7 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
             { _, selectedYear, selectedMonth, selectedDayOfMonth ->
 
                 val selectedDate = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
-                etDate.text = null
-                etDate.hint = selectedDate
+                etDate.setText(selectedDate)
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 val theDate = sdf.parse(selectedDate)
@@ -122,6 +136,62 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         )
         dpd.show()
     }
+
+    fun savePengeluaranRecord() {
+        val judulEditText = findViewById<EditText>(R.id.judul_edittext)
+        val jumlahPengeluaranEditText = findViewById<EditText>(R.id.jumlah_pengeluaran_editext)
+        val catatanEditText = findViewById<EditText>(R.id.catatan_edittext)
+        val tanggalEditText = findViewById<EditText>(R.id.tanggal_editext)
+
+        val judul = judulEditText.text.toString()
+        val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString()
+        val catatan = catatanEditText.text.toString()
+        val tanggal = tanggalEditText.text.toString()
+
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/PostPengeluaran?title=" +
+                judul + "&amount=" +
+                jumlahPengeluaran + "&note=" +
+                catatan + "&date=" +
+                tanggal
+
+
+
+        val sr = StringRequest(
+            Request.Method.POST,
+            urlEndPoints,
+            { response ->
+                try {
+                    val jsonResponse = JSONObject(response)
+
+                    // Check if the response contains an error field
+                    if (jsonResponse.has("error")) {
+                        val errorMessage = jsonResponse.getString("error")
+                        // Display toast with the error message
+                        Toast.makeText(this@AddRecordPengeluaranActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Registration successful
+                        Toast.makeText(
+                            this@AddRecordPengeluaranActivity,
+                            "Record has been added",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        val intent = Intent(this@AddRecordPengeluaranActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }
+                } catch (e: JSONException) {
+                    // Handle JSON parsing error
+                    e.printStackTrace()
+                    Toast.makeText(this@AddRecordPengeluaranActivity, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        ) { Toast.makeText(this@AddRecordPengeluaranActivity, "Registration failed", Toast.LENGTH_SHORT).show() }
+
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(sr)
+    }
+
 
 
 }
