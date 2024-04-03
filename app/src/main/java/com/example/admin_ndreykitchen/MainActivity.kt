@@ -1,4 +1,3 @@
-
 package com.example.admin_ndreykitchen
 
 import HomeFragment
@@ -22,8 +21,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -41,7 +38,6 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.home -> makeCurrentFragment(homeFragment)
                 R.id.menu -> makeCurrentFragment(menuFragment)
-                //R.id.add_transaction -> makeCurrentFragment(addTransactionFragment)
                 R.id.penjualan -> makeCurrentFragment(penjualanFragment)
                 R.id.profile -> makeCurrentFragment(profileFragment)
             }
@@ -50,12 +46,10 @@ class MainActivity : AppCompatActivity() {
 
         add_transaction_btn = findViewById(R.id.add_transaction)
         add_transaction_btn.setOnClickListener{
-            val intent = Intent(this, AddTransaction::class.java)
+            val intent = Intent(this, AddRecordPemasukanActivity::class.java)
             startActivity(intent)
         }
     }
-
-
 
     private fun makeCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {

@@ -5,14 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddTransaction"
-    android:background="@drawable/gradien_color">
+    tools:context=".AddRecordPemasukanActivity"
+    android:background="@color/tosca">
 
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/gradien_color"
+        android:background="@color/tosca"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -61,24 +61,29 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/button"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/pemasukan_button"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:text="Pemasukan"
+                app:cornerRadius="12sp"
+                android:textColor="@color/abu"
+                android:backgroundTint="@color/abu_btn_notselected"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/pengeluaran_btn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:backgroundTint="@color/orange_pudar"
                 android:text="Pengeluaran"
+                app:cornerRadius="12sp"
+                android:backgroundTint="@color/tosca"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -92,10 +97,29 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                app:layout_constraintTop_toBottomOf="@+id/pengeluaran_btn" />
 
             <EditText
-                android:id="@+id/email_edittext"
+                android:id="@+id/kategori_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/abu_bg"
+                android:hint="Masukkan Jumlah Pengeluaran"
+                android:inputType="number"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="16dp"
+                android:textColorHint="@color/abu"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/jumlah_pengeluaran_textview" />
+
+            <AutoCompleteTextView
+                android:id="@+id/expense_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -104,10 +128,13 @@
                 android:background="@drawable/abu_bg"
                 android:drawableRight="@drawable/arrow_bottom"
                 android:hint="Pilih Kategori..."
+                android:inputType="none"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="16dp"
                 android:textColorHint="@color/abu"
                 android:textSize="14sp"
+
+                android:completionThreshold="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
@@ -122,7 +149,7 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/email_edittext" />
+                app:layout_constraintTop_toBottomOf="@+id/expense_category" />
 
             <EditText
                 android:id="@+id/judul_edittext"
@@ -195,7 +222,8 @@
                 android:background="@drawable/abu_bg"
                 android:drawableRight="@drawable/calendar_icon"
                 android:hint="Masukkan tanggal..."
-                android:inputType="datetime"
+                android:inputType="date"
+                android:focusable="false"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="16dp"
                 android:textColorHint="@color/abu"
@@ -237,15 +265,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/catatan_textview" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/loginbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/rounded_btn"
-                android:text="Login"
+                android:text="Save"
+                android:backgroundTint="@color/tosca"
+                app:cornerRadius="12sp"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

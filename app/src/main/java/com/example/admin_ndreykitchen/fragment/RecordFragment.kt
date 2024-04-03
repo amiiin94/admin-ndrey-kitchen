@@ -14,7 +14,6 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.R
-import com.example.admin_ndreykitchen.adapter.MenuAdapter
 import com.example.admin_ndreykitchen.adapter.RecordAdapter
 import com.example.admin_ndreykitchen.model.RecordModel
 import org.json.JSONArray
@@ -53,7 +52,7 @@ class RecordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_transaksi, container, false)
+        return inflater.inflate(R.layout.fragment_record, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

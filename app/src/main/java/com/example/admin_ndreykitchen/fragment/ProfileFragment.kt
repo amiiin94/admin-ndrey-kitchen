@@ -2,12 +2,15 @@ package com.example.admin_ndreykitchen.fragment
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.admin_ndreykitchen.LoginActivity
 import com.example.admin_ndreykitchen.R
 
@@ -26,7 +29,9 @@ class ProfileFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var logout: LinearLayout
+    private lateinit var picture: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,12 +47,34 @@ class ProfileFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        picture = view.findViewById(R.id.picture)
         logout = view.findViewById(R.id.logout)
         logout.setOnClickListener {
             logout()
         }
+
+        // Initialize sharedPreferences
+        sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
+
         return view
     }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Get username from SharedPreferences
+        val username = sharedPreferences.getString("username", "")
+
+        // Set the first letter of the username as the text of the picture TextView
+        if (!username.isNullOrEmpty()) {
+            picture.text = username[0].toString().uppercase()
+        } else {
+            // Handle the case where username is empty or null
+            picture.text = ""
+        }
+    }
+
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)

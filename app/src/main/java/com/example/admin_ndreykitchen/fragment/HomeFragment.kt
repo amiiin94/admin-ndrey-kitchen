@@ -1,4 +1,5 @@
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,9 @@ class HomeFragment : Fragment() {
     private lateinit var pengeluaran: TextView
     private lateinit var total_transaksi: TextView
     private lateinit var makanan_terjual: TextView
+    private lateinit var selamat_datang: TextView
+    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,13 +34,21 @@ class HomeFragment : Fragment() {
         pengeluaran = view.findViewById(R.id.pengeluaran)
         total_transaksi = view.findViewById(R.id.total_transaksi)
         makanan_terjual = view.findViewById(R.id.makanan_terjual)
+        selamat_datang = view.findViewById(R.id.selamatDatangNama)
+        // Initialize SharedPreferences
+        sharedPreferences = requireContext().getSharedPreferences("UserData", Context.MODE_PRIVATE)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Get username from SharedPreferences
+        val username = sharedPreferences.getString("username", "")
+        selamat_datang.text = "Selamat Datang, $username"
+
         getHomeFragmentData(requireContext())
     }
+
 
     private fun displayHomeFragmentData(pemasukanAmount: Int, pengeluaranAmount: Int, totalTransaksi: Int, makananTerjual: Int) {
         pemasukan.text = "IDR $pemasukanAmount"
