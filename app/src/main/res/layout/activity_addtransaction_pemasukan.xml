@@ -122,13 +122,13 @@
                         app:layout_constraintTop_toTopOf="parent"></TextView>
 
                     <Button
-                        android:id="@+id/order_btn"
+                        android:id="@+id/save_btn"
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:background="@drawable/rounded_btn"
-                        android:text="Simpan"
+                        android:text="Save"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

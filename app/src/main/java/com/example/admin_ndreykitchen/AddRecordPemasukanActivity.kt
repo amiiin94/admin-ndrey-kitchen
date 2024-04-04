@@ -11,26 +11,31 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.admin_ndreykitchen.adapter.MenuAdapter
 import com.example.admin_ndreykitchen.adapter.MenuTambahTransaksiAdapter
 import com.example.admin_ndreykitchen.fragment.SpaceItemDecoration
 import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
 import org.json.JSONException
+import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapter.QuantityChangeListener {
 
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
     private lateinit var back_btn: ImageView
+    private lateinit var save_btn: Button
+    private var totalHarga = 0 // Declare totalHarga property here
+    var isFirstClick = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +70,13 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
         rv_menu.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
         getAllMenus(this)
+
+        //save record
+        save_btn = findViewById(R.id.save_btn)
+        save_btn.setOnClickListener {
+            putAmount(totalHarga)
+            postItemsWithQuantity()
+        }
     }
 
     private fun getAllMenus(context: Context) {
@@ -101,7 +113,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
     }
 
     private fun displayMenu() {
-        val menuAdapter = MenuTambahTransaksiAdapter(menuList, this)
+        val menuAdapter = MenuTambahTransaksiAdapter(menuList, this, this)
         rv_menu.adapter = menuAdapter
         calculateTotalHarga()
     }
@@ -111,11 +123,121 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
     }
 
     private fun calculateTotalHarga() {
-        var totalHarga = 0
+        totalHarga = 0 // Reset totalHarga before calculating
         for (menu in menuList) {
             totalHarga += menu.harga_menu * menu.quantity
         }
         val totalHargaTextView: TextView = findViewById(R.id.tvTotalHarga)
         totalHargaTextView.text = "Total Harga: Rp $totalHarga"
+    }
+
+    fun postIdRecord() {
+        val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postIdPemasukan?date=" +
+                currentDate
+
+        val sr = StringRequest(
+            Request.Method.POST,
+            urlEndPoints,
+            { response ->
+                try {
+                    val jsonResponse = JSONObject(response)
+
+                    // Check if the response contains an error field
+                    if (jsonResponse.has("error")) {
+                        val errorMessage = jsonResponse.getString("error")
+                        // Display toast with the error message
+                        Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Registration successful
+                        Toast.makeText(
+                            this@AddRecordPemasukanActivity,
+                            "record id have been added",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } catch (e: JSONException) {
+                    // Handle JSON parsing error
+                    e.printStackTrace()
+                    Toast.makeText(this@AddRecordPemasukanActivity, "failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        ) { Toast.makeText(this@AddRecordPemasukanActivity, "Registration failed", Toast.LENGTH_SHORT).show() }
+
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(sr)
+    }
+
+    fun putAmount(totalHarga: Int) {
+
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putTotalHargaOnLastRecord?amount=$totalHarga"
+
+        val sr = StringRequest(
+            Request.Method.PUT,
+            urlEndPoints,
+            { response ->
+                if (response == "\"Total harga updated successfully for the last document.\"") {
+                    // Update successful
+                    Toast.makeText(this@AddRecordPemasukanActivity, "Amount Updated", Toast.LENGTH_SHORT).show()
+
+                    // Redirect to the main activity
+                    val mainActivityIntent = Intent(this@AddRecordPemasukanActivity, MainActivity::class.java)
+                    startActivity(mainActivityIntent)
+                } else {
+                    // Display toast with the response message
+                    Toast.makeText(this@AddRecordPemasukanActivity, response, Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                // Handle Volley error
+                error.printStackTrace()
+                Toast.makeText(this@AddRecordPemasukanActivity, "Failed: " + error.message, Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(sr)
+    }
+
+    fun postItemMenu(item: String, quantity: Int) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postItemMenuPemasukan?item=$item&quantity=$quantity"
+
+        val sr = StringRequest(
+            Request.Method.POST,
+            urlEndPoints,
+            { response ->
+                try {
+                    val jsonResponse = JSONObject(response)
+
+                    // Check if the response contains an error field
+                    if (jsonResponse.has("error")) {
+                        val errorMessage = jsonResponse.getString("error")
+                        // Display toast with the error message
+                        Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Post successful
+                        Toast.makeText(this@AddRecordPemasukanActivity, "Item posted successfully", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: JSONException) {
+                    // Handle JSON parsing error
+                    e.printStackTrace()
+                    Toast.makeText(this@AddRecordPemasukanActivity, "Failed to post item", Toast.LENGTH_SHORT).show()
+                }
+            }
+        ) {
+            Toast.makeText(this@AddRecordPemasukanActivity, "Failed to post item", Toast.LENGTH_SHORT).show()
+        }
+
+        val requestQueue = Volley.newRequestQueue(applicationContext)
+        requestQueue.add(sr)
+    }
+
+    fun postItemsWithQuantity() {
+        for (menu in menuList) {
+            if (menu.quantity > 0) {
+                postItemMenu(menu.nama_menu, menu.quantity)
+            }
+        }
     }
 }

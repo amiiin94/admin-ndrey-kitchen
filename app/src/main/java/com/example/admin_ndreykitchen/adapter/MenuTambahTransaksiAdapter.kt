@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.admin_ndreykitchen.AddRecordPemasukanActivity
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.MenuModel
 
 class MenuTambahTransaksiAdapter(
     private val menuList: MutableList<MenuModel>,
-    private val quantityChangeListener: QuantityChangeListener) : RecyclerView.Adapter<MenuTambahTransaksiAdapter.ViewHolder>() {
+    private val quantityChangeListener: QuantityChangeListener,
+    private val activity: AddRecordPemasukanActivity
+) : RecyclerView.Adapter<MenuTambahTransaksiAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image_menu: ImageView = itemView.findViewById(R.id.image_menu)
@@ -30,6 +33,10 @@ class MenuTambahTransaksiAdapter(
                 quantity++
                 quantityTextView.text = quantity.toString()
                 menuList[adapterPosition].quantity = quantity // Update quantity in the corresponding MenuModel
+                if (activity.isFirstClick) {
+                    activity.postIdRecord()
+                    activity.isFirstClick = false // Update the flag to indicate that the button has been clicked
+                }
                 quantityChangeListener.onQuantityChanged() // Notify activity of quantity change
             }
 
@@ -67,4 +74,6 @@ class MenuTambahTransaksiAdapter(
     interface QuantityChangeListener {
         fun onQuantityChanged()
     }
+
+
 }

@@ -29,7 +29,6 @@ class RecordAdapter(private val recordList: List<RecordModel>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
-        holder.titleRecord.text = record.title_record
         holder.amountRecord.text = record.amount_record.toString()
         holder.dateRecord.text = record.date_record
         holder.noteRecord.text = record.note_record
