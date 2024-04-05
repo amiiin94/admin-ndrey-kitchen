@@ -27,10 +27,16 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:visibility="gone"></TextView>
+            <TextView
+                android:id="@+id/title_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="gone"></TextView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@color/pink_muda"
                 android:orientation="horizontal"
                 android:padding="12dp">
@@ -52,36 +58,25 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/title_record"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:text="Nasi Goreng Ayam 2x"
-                android:textSize="14dp"
-
-                android:textStyle="bold" />
-
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="90dp"
                 android:orientation="horizontal"
-                android:padding="12dp">
+                android:paddingTop="12dp"
+                android:paddingHorizontal="12dp">
 
-                <TextView
-                    android:id="@+id/note_record"
+                <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="+3 Menu lainnya"
-                    android:textSize="12sp" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/rv_item_menu"
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
+                    android:layout_gravity="bottom"
                     app:srcCompat="@drawable/arrow" />
 
             </LinearLayout>

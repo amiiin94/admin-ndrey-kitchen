@@ -15,6 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.adapter.RecordAdapter
+import com.example.admin_ndreykitchen.model.ItemListMenuModel
 import com.example.admin_ndreykitchen.model.RecordModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -37,6 +38,7 @@ class RecordFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private val recordList = mutableListOf<RecordModel>()
+    private var itemMenuList = mutableListOf<ItemListMenuModel>()
     private lateinit var rv_record: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,10 +68,12 @@ class RecordFragment : Fragment() {
         rv_record.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
         // Create an empty adapter and set it to the RecyclerView
-        val recordAdapter = RecordAdapter(recordList)
+        // Create an empty adapter and set it to the RecyclerView
+        val recordAdapter = RecordAdapter(recordList) // Pass both lists here
         rv_record.adapter = recordAdapter
 
         getAllrecords(requireContext())
+        //getAllItemListMenu(requireContext())
     }
 
     private fun getAllrecords(context: Context) {
@@ -85,19 +89,25 @@ class RecordFragment : Fragment() {
                         for (i in 0 until records.length()) {
                             val recordJson = records.getJSONObject(i)
 
-                            val id_record = recordJson.getString("_id")
+                            val id_record = recordJson.getString("_id").substring(0, 10)
                             val type_record = recordJson.getString("type")
-                            val title_record = recordJson.getString("title")
+                            val title_record = if (recordJson.has("title")) {
+                                recordJson.optString("title", "") // Use optString to avoid JSONException
+                            } else {
+                                "" // Provide default value if "title" field is missing
+                            }
                             val amount_record = recordJson.getInt("amount")
                             val date_record = recordJson.getString("date")
                             val note_record = recordJson.getString("note")
-                            val quantity_record = recordJson.getInt("quantity")
 
                             val formattedHarga: String = formatToRupiah(amount_record)
 
-                            val record = RecordModel(id_record, type_record, title_record, formattedHarga, date_record, note_record, quantity_record)
+                            val record = RecordModel(id_record, type_record, title_record, formattedHarga, date_record, note_record)
                             recordList.add(record)
+
                         }
+                        // Now that recordList is populated, fetch item menu list
+//                        getAllItemListMenu(context)
                         Log.d("RecordFragment", "recordList: $recordList")
                         displayMenu()
                     }
@@ -128,24 +138,56 @@ class RecordFragment : Fragment() {
         return "Rp. $formattedValue"
     }
 
+    private fun getAllItemListMenu(context: Context) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getItemMenu"
+        val sr = StringRequest(
+            Request.Method.GET,
+            urlEndPoints,
+            { response ->
+                try {
+                    val records = JSONArray(response)
+                    if (records.length() > 0) {
+                        itemMenuList.clear() // Clear itemMenuList instead of recordList
+                        for (i in 0 until records.length()) {
+                            val recordJson = records.getJSONObject(i)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PenjualanFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RecordFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+                            val _id = recordJson.getString("_id")
+                            val record_id = recordJson.getString("record_id")
+                            val item = recordJson.getString("item")
+                            val quantity = recordJson.getInt("quantity")
+
+                            val record = ItemListMenuModel(_id, record_id, item, quantity)
+                            itemMenuList.add(record)
+                        }
+                        // Associate item menu with records and update the UI
+//                        associateItemMenuWithRecords()
+                        Log.d("RecordFragment", "itemMenuList: $itemMenuList") // Log itemMenuList
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
+            },
+            { error ->
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
+        )
+        val requestQueue = Volley.newRequestQueue(context.applicationContext)
+        requestQueue.add(sr)
     }
+
+
+//    private fun associateItemMenuWithRecords() {
+//        for (record in recordList) {
+//            val associatedItems = mutableListOf<ItemListMenuModel>()
+//            for (itemMenu in itemMenuList) {
+//                if (itemMenu.record_id == record.id_record) {
+//                    associatedItems.add(itemMenu)
+//                }
+//            }
+//            record.itemMenuList = associatedItems
+//        }
+//        // Once all records are associated with their item menus, update the UI
+//        displayMenu()
+//    }
+
 }
