@@ -3,7 +3,6 @@ package com.example.admin_ndreykitchen
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
@@ -16,10 +15,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.admin_ndreykitchen.adapter.MenuTambahTransaksiAdapter
+import com.example.admin_ndreykitchen.adapter.AddTransactionAdapter
 import com.example.admin_ndreykitchen.fragment.SpaceItemDecoration
 import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
@@ -28,7 +26,7 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
 
-class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapter.QuantityChangeListener {
+class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.QuantityChangeListener {
 
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
@@ -113,7 +111,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), MenuTambahTransaksiAdapt
     }
 
     private fun displayMenu() {
-        val menuAdapter = MenuTambahTransaksiAdapter(menuList, this, this)
+        val menuAdapter = AddTransactionAdapter(menuList, this, this)
         rv_menu.adapter = menuAdapter
         calculateTotalHarga()
     }

@@ -15,7 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.adapter.RecordAdapter
-import com.example.admin_ndreykitchen.model.ItemListMenuModel
+import com.example.admin_ndreykitchen.model.ItemModel
 import com.example.admin_ndreykitchen.model.RecordModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -34,11 +34,10 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class RecordFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private val recordList = mutableListOf<RecordModel>()
-    private var itemMenuList = mutableListOf<ItemListMenuModel>()
+    private val itemList = mutableListOf<ItemModel>()
     private lateinit var rv_record: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +52,6 @@ class RecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_record, container, false)
     }
 
@@ -63,21 +61,18 @@ class RecordFragment : Fragment() {
         rv_record = view.findViewById(R.id.rv_record)
         rv_record.layoutManager = GridLayoutManager(requireContext(), 1)
 
-        val horizontalSpace = 0
-        val verticalSpace = 8
+        val horizontalSpace = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
+        val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
         rv_record.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
-        // Create an empty adapter and set it to the RecyclerView
-        // Create an empty adapter and set it to the RecyclerView
-        val recordAdapter = RecordAdapter(recordList) // Pass both lists here
-        rv_record.adapter = recordAdapter
 
+        getAllItemListMenu(requireContext())
         getAllrecords(requireContext())
-        //getAllItemListMenu(requireContext())
     }
 
     private fun getAllrecords(context: Context) {
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getAllRecord"
+        val urlEndPoints =
+            "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getAllRecord"
         val sr = StringRequest(
             Request.Method.GET,
             urlEndPoints,
@@ -89,10 +84,13 @@ class RecordFragment : Fragment() {
                         for (i in 0 until records.length()) {
                             val recordJson = records.getJSONObject(i)
 
-                            val id_record = recordJson.getString("_id").substring(0, 10)
+                            val id_record = recordJson.getString("_id").substring(0, 15)
                             val type_record = recordJson.getString("type")
                             val title_record = if (recordJson.has("title")) {
-                                recordJson.optString("title", "") // Use optString to avoid JSONException
+                                recordJson.optString(
+                                    "title",
+                                    ""
+                                ) // Use optString to avoid JSONException
                             } else {
                                 "" // Provide default value if "title" field is missing
                             }
@@ -102,32 +100,38 @@ class RecordFragment : Fragment() {
 
                             val formattedHarga: String = formatToRupiah(amount_record)
 
-                            val record = RecordModel(id_record, type_record, title_record, formattedHarga, date_record, note_record)
+                            val record = RecordModel(
+                                id_record,
+                                type_record,
+                                title_record,
+                                formattedHarga,
+                                date_record,
+                                note_record
+                            )
                             recordList.add(record)
-
                         }
-                        // Now that recordList is populated, fetch item menu list
-//                        getAllItemListMenu(context)
+                        displayRecords()
                         Log.d("RecordFragment", "recordList: $recordList")
-                        displayMenu()
+
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
             { error ->
-                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT)
+                    .show()
             }
         )
         val requestQueue = Volley.newRequestQueue(context.applicationContext)
         requestQueue.add(sr)
     }
 
-
-    private fun displayMenu() {
-        val recordAdapter = RecordAdapter(recordList)
+    private fun displayRecords() {
+        val recordAdapter = RecordAdapter(recordList, itemList)
         rv_record.adapter = recordAdapter
     }
+
 
     private fun formatToRupiah(value: Int): String {
         val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
@@ -139,7 +143,8 @@ class RecordFragment : Fragment() {
     }
 
     private fun getAllItemListMenu(context: Context) {
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getItemMenu"
+        val urlEndPoints =
+            "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getItemMenu"
         val sr = StringRequest(
             Request.Method.GET,
             urlEndPoints,
@@ -147,47 +152,32 @@ class RecordFragment : Fragment() {
                 try {
                     val records = JSONArray(response)
                     if (records.length() > 0) {
-                        itemMenuList.clear() // Clear itemMenuList instead of recordList
+                        itemList.clear() // Clearing the list here
                         for (i in 0 until records.length()) {
+                            // Adding items to itemMenuList here
                             val recordJson = records.getJSONObject(i)
-
                             val _id = recordJson.getString("_id")
-                            val record_id = recordJson.getString("record_id")
+                            val record_id = recordJson.getString("record_id").substring(0, 15)
                             val item = recordJson.getString("item")
                             val quantity = recordJson.getInt("quantity")
 
-                            val record = ItemListMenuModel(_id, record_id, item, quantity)
-                            itemMenuList.add(record)
+                            val record = ItemModel(_id, record_id, item, quantity)
+                            itemList.add(record)
                         }
-                        // Associate item menu with records and update the UI
-//                        associateItemMenuWithRecords()
-                        Log.d("RecordFragment", "itemMenuList: $itemMenuList") // Log itemMenuList
+
                     }
+
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
             { error ->
-                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT)
+                    .show()
             }
         )
         val requestQueue = Volley.newRequestQueue(context.applicationContext)
         requestQueue.add(sr)
     }
-
-
-//    private fun associateItemMenuWithRecords() {
-//        for (record in recordList) {
-//            val associatedItems = mutableListOf<ItemListMenuModel>()
-//            for (itemMenu in itemMenuList) {
-//                if (itemMenu.record_id == record.id_record) {
-//                    associatedItems.add(itemMenu)
-//                }
-//            }
-//            record.itemMenuList = associatedItems
-//        }
-//        // Once all records are associated with their item menus, update the UI
-//        displayMenu()
-//    }
 
 }

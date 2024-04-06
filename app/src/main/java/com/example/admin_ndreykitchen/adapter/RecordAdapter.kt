@@ -1,19 +1,20 @@
 package com.example.admin_ndreykitchen.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_ndreykitchen.R
-import com.example.admin_ndreykitchen.model.ItemListMenuModel
-import com.example.admin_ndreykitchen.model.MenuModel
+import com.example.admin_ndreykitchen.model.ItemModel
 import com.example.admin_ndreykitchen.model.RecordModel
 
-class RecordAdapter(private val recordList: List<RecordModel>) :
+class RecordAdapter(private val recordList: List<RecordModel>, private val itemList: List<ItemModel>) :
     RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
     private lateinit var context: Context
@@ -29,13 +30,19 @@ class RecordAdapter(private val recordList: List<RecordModel>) :
         return ViewHolder(recordView)
     }
 
+    // Inside onBindViewHolder method of RecordAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
-        holder.id_record.text = record.id_record.toString()
-        holder.titleRecord.text = record.title_record.toString()
-        holder.amountRecord.text = record.amount_record.toString()
+        holder.id_record.text = record.id_record
+        holder.titleRecord.text = record.title_record
+        holder.amountRecord.text = record.amount_record
         holder.dateRecord.text = record.date_record
+
+        // Find the corresponding ItemModel based on the record_id
+        val correspondingItem = itemList.find { it.record_id == record.id_record }
+        holder.item?.text = correspondingItem?.item ?: "Item not found"
     }
+
 
     override fun getItemCount(): Int {
         return recordList.size
@@ -46,6 +53,9 @@ class RecordAdapter(private val recordList: List<RecordModel>) :
         val titleRecord: TextView = itemView.findViewById(R.id.title_record)
         val amountRecord: TextView = itemView.findViewById(R.id.amount_record)
         val dateRecord: TextView = itemView.findViewById(R.id.date_record)
+        val item: TextView? = itemView.findViewById(R.id.item) // Use nullable TextView
+
+
     }
 
     companion object {

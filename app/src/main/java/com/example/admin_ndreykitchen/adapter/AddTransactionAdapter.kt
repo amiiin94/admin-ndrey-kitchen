@@ -1,6 +1,5 @@
 package com.example.admin_ndreykitchen.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +10,11 @@ import com.example.admin_ndreykitchen.AddRecordPemasukanActivity
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.MenuModel
 
-class MenuTambahTransaksiAdapter(
+class AddTransactionAdapter(
     private val menuList: MutableList<MenuModel>,
     private val quantityChangeListener: QuantityChangeListener,
     private val activity: AddRecordPemasukanActivity
-) : RecyclerView.Adapter<MenuTambahTransaksiAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<AddTransactionAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val image_menu: ImageView = itemView.findViewById(R.id.image_menu)

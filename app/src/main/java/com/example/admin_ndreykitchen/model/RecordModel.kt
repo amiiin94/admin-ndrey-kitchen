@@ -6,6 +6,13 @@ class RecordModel (
     val title_record: String? = null,
     val amount_record: String? = null,
     val date_record: String? = null,
-    val note_record: String? = null,
-    var itemMenuList: List<ItemListMenuModel>? = null
+    val note_record: String? = null
+)
+
+class ItemModel(
+    val _id: String,
+    val record_id: String,
+    val item: String,
+    val quantity: Int
+
 )
