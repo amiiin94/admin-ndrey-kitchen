@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -32,26 +33,32 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val menu = menuList[position]
-        holder.nama_menu.text = menu.nama_menu
-        holder.harga_menu.text = menu.harga_menu.toString()
-        holder.tvId.text = menu.id_menu
-        Picasso.get().load(menu.image_menu).into(holder.image_menu)
+        if (menuList.isEmpty()) {
+            holder.menu_detail.visibility = View.VISIBLE
+            holder.tvEmpty.visibility = View.VISIBLE
+        } else {
+            val menu = menuList[position]
+            holder.nama_menu.text = menu.nama_menu
+            holder.harga_menu.text = menu.harga_menu.toString()
+            holder.tvId.text = menu.id_menu
+            Picasso.get().load(menu.image_menu).into(holder.image_menu)
 
-        holder.ivEdit.setOnClickListener {
-            val intent = Intent(context, EditMenuActivity::class.java).apply {
-                // Pass the menu ID or any other necessary data to EditMenuActivity
-                putExtra("menu_id", menu.id_menu)
-                putExtra("nama_menu", menu.nama_menu)
-                putExtra("harga_menu", menu.harga_menu)
-                putExtra("kategori_menu", menu.kategori_menu)
-                putExtra("deskripsi_menu", menu.deskripsi_menu)
-                putExtra("image_menu", menu.image_menu)
-                // Add more extras if needed
+            holder.ivEdit.setOnClickListener {
+                val intent = Intent(context, EditMenuActivity::class.java).apply {
+                    // Pass the menu ID or any other necessary data to EditMenuActivity
+                    putExtra("menu_id", menu.id_menu)
+                    putExtra("nama_menu", menu.nama_menu)
+                    putExtra("harga_menu", menu.harga_menu)
+                    putExtra("kategori_menu", menu.kategori_menu)
+                    putExtra("deskripsi_menu", menu.deskripsi_menu)
+                    putExtra("image_menu", menu.image_menu)
+                    // Add more extras if needed
+                }
+                context.startActivity(intent)
             }
-            context.startActivity(intent)
         }
     }
+
 
     override fun getItemCount(): Int {
         return menuList.size
@@ -65,6 +72,8 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
         val tvId: TextView = itemView.findViewById(R.id.tvId)
         val ivEdit: ImageView = itemView.findViewById(R.id.ivEdit)
         val ivDelete: ImageView = itemView.findViewById(R.id.ivDelete)
+        val tvEmpty: TextView = itemView.findViewById(R.id.tvEmpty)
+        val menu_detail: CardView = itemView.findViewById(R.id.menu_detail)
     }
 
 

@@ -47,7 +47,7 @@
                     app:layout_constraintTop_toTopOf="@+id/daftar_menu_textview" />
 
                 <EditText
-                    android:id="@+id/search_menu_edittext"
+                    android:id="@+id/etSearch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -62,6 +62,9 @@
                     android:textAlignment="gravity"
                     android:textColorHint="@color/abu"
                     android:textSize="14sp"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:imeOptions="actionDone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/daftar_menu_textview" />
@@ -73,7 +76,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="12dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/search_menu_edittext">
+                    app:layout_constraintTop_toBottomOf="@+id/etSearch">
 
                     <LinearLayout
                         android:layout_width="wrap_content"

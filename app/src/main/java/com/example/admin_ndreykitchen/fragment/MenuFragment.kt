@@ -4,9 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -16,13 +19,12 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.AddMenuActivity
-import com.example.admin_ndreykitchen.LoginActivity
-import com.example.admin_ndreykitchen.MainActivity
-import com.example.admin_ndreykitchen.model.MenuModel
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.adapter.MenuAdapter
+import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
 import org.json.JSONException
+
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -33,6 +35,7 @@ class MenuFragment : Fragment() {
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
     private lateinit var tambah_menu: TextView
+    private lateinit var etSearch: EditText
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +74,20 @@ class MenuFragment : Fragment() {
             startActivity(intent)
         }
 
+        // Search
+        etSearch = view.findViewById(R.id.etSearch)
+        etSearch.setOnEditorActionListener { v, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                val searchName: String = etSearch.text.toString()
+                if (searchName.isNotEmpty()) {
+                    getMenuByName(requireContext(), searchName)
+                } else {
+                    getAllMenus(requireContext())
+                }
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
 
 
         getAllMenus(requireContext())
@@ -120,14 +137,40 @@ class MenuFragment : Fragment() {
     }
 
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MenuFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun getMenuByName(context: Context, nama: String) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getMenuByName?nama=$nama"
+        val sr = StringRequest(
+            Request.Method.GET,
+            urlEndPoints,
+            { response ->
+                try {
+                    menuList.clear()
+                    val menus = JSONArray(response)
+                    for (i in 0 until menus.length()) {
+                        val menuJson = menus.getJSONObject(i)
+
+                        val id_menu = menuJson.getString("_id")
+                        val nama_menu = menuJson.getString("nama")
+                        val harga_menu = menuJson.getInt("harga")
+                        val images = menuJson.getString("image")
+                        val deskripsi_menu = menuJson.getString("deskripsi")
+                        val kategori_menu = menuJson.getString("kategori")
+
+
+                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images, deskripsi_menu, kategori_menu)
+                        menuList.add(menu)
+                    }
+                    Log.d("MenuFragment", "menuList: $menuList")
+                    displayMenu()
+                } catch (e: JSONException) {
+                    e.printStackTrace()
                 }
+            },
+            { error ->
+                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
+        )
+        val requestQueue = Volley.newRequestQueue(context)
+        requestQueue.add(sr)
     }
 }
