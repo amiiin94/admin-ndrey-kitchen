@@ -1,11 +1,13 @@
 package com.example.admin_ndreykitchen.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,6 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.admin_ndreykitchen.AddMenuActivity
+import com.example.admin_ndreykitchen.LoginActivity
+import com.example.admin_ndreykitchen.MainActivity
 import com.example.admin_ndreykitchen.model.MenuModel
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.adapter.MenuAdapter
@@ -27,6 +32,8 @@ class MenuFragment : Fragment() {
     private var param2: String? = null
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
+    private lateinit var tambah_menu: TextView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +64,15 @@ class MenuFragment : Fragment() {
         val menuAdapter = MenuAdapter(menuList)
         rv_menu.adapter = menuAdapter
 
+        // Tambah Menu
+        tambah_menu = view.findViewById(R.id.tambah_menu)
+        tambah_menu.setOnClickListener {
+            val intent = Intent(requireContext(), AddMenuActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
         getAllMenus(requireContext())
     }
 
@@ -76,8 +92,11 @@ class MenuFragment : Fragment() {
                         val nama_menu = menuJson.getString("nama")
                         val harga_menu = menuJson.getInt("harga")
                         val images = menuJson.getString("image")
+                        val deskripsi_menu = menuJson.getString("deskripsi")
+                        val kategori_menu = menuJson.getString("kategori")
 
-                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images)
+
+                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images, deskripsi_menu, kategori_menu)
                         menuList.add(menu)
                     }
                     Log.d("MenuFragment", "menuList: $menuList")

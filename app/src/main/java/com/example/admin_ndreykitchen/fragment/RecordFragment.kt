@@ -84,7 +84,7 @@ class RecordFragment : Fragment() {
                         for (i in 0 until records.length()) {
                             val recordJson = records.getJSONObject(i)
 
-                            val id_record = recordJson.getString("_id").substring(0, 15)
+                            val id_record = recordJson.getString("_id")
                             val type_record = recordJson.getString("type")
                             val title_record = if (recordJson.has("title")) {
                                 recordJson.optString(
@@ -157,7 +157,7 @@ class RecordFragment : Fragment() {
                             // Adding items to itemMenuList here
                             val recordJson = records.getJSONObject(i)
                             val _id = recordJson.getString("_id")
-                            val record_id = recordJson.getString("record_id").substring(0, 15)
+                            val record_id = recordJson.getString("record_id")
                             val item = recordJson.getString("item")
                             val quantity = recordJson.getInt("quantity")
 

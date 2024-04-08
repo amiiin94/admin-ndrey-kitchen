@@ -93,8 +93,11 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                         val nama_menu = menuJson.getString("nama")
                         val harga_menu = menuJson.getInt("harga")
                         val images = menuJson.getString("image")
+                        val deskripsi_menu = menuJson.getString("deskripsi")
+                        val kategori_menu = menuJson.getString("kategori")
 
-                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images)
+
+                        val menu = MenuModel(id_menu, nama_menu, harga_menu, images, deskripsi_menu, kategori_menu)
                         menuList.add(menu)
                     }
                     displayMenu()

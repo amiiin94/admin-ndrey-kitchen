@@ -1,7 +1,10 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
+
 
 android {
     namespace = "com.example.admin_ndreykitchen"
@@ -15,6 +18,11 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    packaging {
+        // Exclude specific file from packaging
+        exclude("META-INF/androidx.cardview_cardview.version")
     }
 
     buildTypes {
@@ -51,7 +59,13 @@ dependencies {
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.volley)
+    implementation(libs.cardview.v7)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    implementation ("com.squareup.picasso:picasso:2.8")
+
+
 }

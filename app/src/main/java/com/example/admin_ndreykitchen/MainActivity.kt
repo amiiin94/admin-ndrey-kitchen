@@ -4,6 +4,7 @@ import HomeFragment
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -17,6 +18,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var add_transaction_btn: FloatingActionButton
 
+    // Store the default icons for each menu item
+    private val defaultIcons = mutableMapOf<Int, Int>()
+
     @RequiresApi(Build.VERSION_CODES.R)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,19 +33,33 @@ class MainActivity : AppCompatActivity() {
         val penjualanFragment = RecordFragment()
         val profileFragment = ProfileFragment()
 
-        // Set the initially selected item programmatically
-        binding.bottomNavigationView.selectedItemId = R.id.home
+        // Retrieve the selected tab ID from the intent
+        val selectedTabId = intent.getIntExtra("selected_tab", -1)
 
-        makeCurrentFragment(homeFragment)
+        // Determine which fragment to show based on the selected tab ID
+        val initialFragment = when (selectedTabId) {
+            R.id.menu -> menuFragment // Navigate to the MenuFragment if selected_tab is R.id.menu
+            else -> homeFragment // Default to HomeFragment if selected_tab is not specified or invalid
+        }
 
-        binding.bottomNavigationView.setOnItemSelectedListener { //when the bottom nav clicked
+        makeCurrentFragment(initialFragment)
+
+        binding.bottomNavigationView.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> makeCurrentFragment(homeFragment)
-                R.id.menu -> makeCurrentFragment(menuFragment)
-                R.id.penjualan -> makeCurrentFragment(penjualanFragment)
-                R.id.profile -> makeCurrentFragment(profileFragment)
+                R.id.home -> {
+                    makeCurrentFragment(homeFragment)
+                }
+                R.id.menu -> {
+                    makeCurrentFragment(menuFragment)
+                }
+                R.id.penjualan -> {
+                    makeCurrentFragment(penjualanFragment)
+                }
+                R.id.profile -> {
+                    makeCurrentFragment(profileFragment)
+                }
             }
-            true // Return true to indicate the item selection event is handled
+            true
         }
 
         add_transaction_btn = findViewById(R.id.add_transaction)
@@ -51,10 +69,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        // Revert to default icon when going back
+        defaultIcons[binding.bottomNavigationView.selectedItemId]?.let {
+            updateNavigationBarIcon(binding.bottomNavigationView.selectedItemId, it)
+        }
+    }
+
     private fun makeCurrentFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.fragment_container, fragment)
             commit()
         }
+    }
+
+    private fun updateNavigationBarIcon(itemId: Int, iconId: Int) {
+        binding.bottomNavigationView.menu.findItem(itemId).setIcon(iconId)
     }
 }

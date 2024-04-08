@@ -33,7 +33,7 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
     // Inside onBindViewHolder method of RecordAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
-        holder.id_record.text = record.id_record
+        holder.id_record.text = record.id_record?.substring(0, 15)
         holder.titleRecord.text = record.title_record
         holder.amountRecord.text = record.amount_record
         holder.dateRecord.text = record.date_record
