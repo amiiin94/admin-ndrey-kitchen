@@ -214,7 +214,7 @@
                 android:layout_marginTop="-5dp"
                 android:fontFamily="@font/poppinsmedium"
                 android:gravity="start"
-                android:text="Expense Transaction"
+                android:text="Pengeluaran"
                 android:textColor="#474747"
                 android:textSize="15sp" />
 
@@ -239,7 +239,7 @@
                 android:fontFamily="@font/poppinsmedium"
                 android:gravity="start"
                 android:text="99999.99"
-                android:textColor="#515151"
+                android:textColor="@color/merah_gelap"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 

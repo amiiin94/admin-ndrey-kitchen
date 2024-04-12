@@ -10,7 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 
 class RecordDetailPengeluaran : AppCompatActivity() {
     private lateinit var tvDateDetail: TextView
-    private lateinit var tvTypeDetail: TextView
     private lateinit var tvAmountDetail: TextView
     private lateinit var tvTitleDetail: TextView
     private lateinit var tvKategoriDetail: TextView
@@ -21,7 +20,6 @@ class RecordDetailPengeluaran : AppCompatActivity() {
 
     private lateinit var _id: String
     private lateinit var date: String
-    private lateinit var type: String
     private  lateinit var amount: String
     private lateinit var title: String
     private lateinit var kategori: String
@@ -42,7 +40,6 @@ class RecordDetailPengeluaran : AppCompatActivity() {
 
     private fun initializeItems() {
         tvDateDetail = findViewById(R.id.tvDateDetail)
-        tvTypeDetail = findViewById(R.id.tvTypeDetail)
         tvAmountDetail = findViewById(R.id.tvAmountDetail)
         tvTitleDetail = findViewById(R.id.tvTitleDetail)
         tvKategoriDetail = findViewById(R.id.tvKategoriDetail)
@@ -55,7 +52,6 @@ class RecordDetailPengeluaran : AppCompatActivity() {
         // Retrieve data from intent
         _id = intent.getStringExtra("id_record") ?: ""
         date = intent.getStringExtra("date_record") ?: ""
-        type = intent.getStringExtra("type_record") ?: ""
         amount = intent.getStringExtra("amount_record") ?: ""
         title = intent.getStringExtra("title_record") ?: ""
         kategori = intent.getStringExtra("kategori_record") ?: ""
@@ -63,8 +59,7 @@ class RecordDetailPengeluaran : AppCompatActivity() {
 
         // Set the data to the views
         tvDateDetail.setText(date)
-        tvTypeDetail.setText((type))
-        tvAmountDetail.setText(amount.toString())
+        tvAmountDetail.setText(amount)
         tvTitleDetail.setText(title)
         tvKategoriDetail.setText(kategori)
         tvNoteDetail.setText(note)

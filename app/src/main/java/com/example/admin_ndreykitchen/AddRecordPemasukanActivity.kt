@@ -133,10 +133,8 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
     }
 
     fun postIdRecord() {
-        val currentDate = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date())
 
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postIdPemasukan?date=" +
-                currentDate
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postIdPemasukan"
 
         val sr = StringRequest(
             Request.Method.POST,
@@ -171,8 +169,9 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
     }
 
     fun putAmount(totalHarga: Int) {
+        val currentDate = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date())
 
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putTotalHargaOnLastRecord?amount=$totalHarga"
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putTotalHargaOnLastRecord?amount=$totalHarga&date=$currentDate"
 
         val sr = StringRequest(
             Request.Method.PUT,

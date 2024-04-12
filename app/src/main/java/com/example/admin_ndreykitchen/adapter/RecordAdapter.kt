@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.RecordDetailPemasukan
@@ -56,11 +57,10 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
             holder.tvItemSize.visibility = View.INVISIBLE
         }
 
-        holder.ivGoToDetail.setOnClickListener {
+        holder.cvRecord.setOnClickListener {
             val detailActivityIntent = when (record.type_record) {
                 "pemasukan" -> Intent(context, RecordDetailPemasukan::class.java).apply {
                     putExtra("id_record", record.id_record)
-                    putExtra("type_record", record.type_record)
                     putExtra("amount_record", record.amount_record)
                     putExtra("date_record", record.date_record)
                     putExtra("note_record", record.note_record)
@@ -68,7 +68,6 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
                 else -> Intent(context, RecordDetailPengeluaran::class.java).apply {
                     putExtra("id_record", record.id_record)
                     putExtra("title_record", record.title_record)
-                    putExtra("type_record", record.type_record)
                     putExtra("amount_record", record.amount_record)
                     putExtra("date_record", record.date_record)
                     putExtra("note_record", record.note_record)
@@ -90,7 +89,7 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         val dateRecord: TextView = itemView.findViewById(R.id.date_record)
         val item: TextView? = itemView.findViewById(R.id.item) // Use nullable TextView
         val tvItemSize: TextView = itemView.findViewById(R.id.tvItemSize)
-        val ivGoToDetail: ImageView = itemView.findViewById(R.id.ivGoToDetail)
+        val cvRecord: CardView = itemView.findViewById(R.id.cvRecord)
 
     }
 
