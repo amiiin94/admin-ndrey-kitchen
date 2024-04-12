@@ -133,7 +133,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
     }
 
     fun postIdRecord() {
-        val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Date())
+        val currentDate = SimpleDateFormat("dd/MM/yyyy HH:mm").format(Date())
 
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postIdPemasukan?date=" +
                 currentDate

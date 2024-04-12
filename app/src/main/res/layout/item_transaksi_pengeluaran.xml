@@ -11,7 +11,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="5dp"
+        app:cardElevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -74,15 +74,16 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/note_record"
+                    android:id="@+id/tvItemSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:text="+3 Menu lainnya"
                     android:textSize="12sp" />
 
                 <ImageView
-                    android:id="@+id/imageView3"
+                    android:id="@+id/ivGoToDetail"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"
@@ -97,7 +98,10 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="Rp 55.000" />
+                android:text="Rp 55.000"
+                android:textColor="@color/merah_gelap"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
         </LinearLayout>
 

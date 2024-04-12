@@ -5,16 +5,18 @@
         android:title="Beranda"
         android:icon="@drawable/home_icon" />
 
-    <item android:id="@+id/menu"
-        android:title="Menu"
-        android:icon="@drawable/menu_icon" />
+    <item android:id="@+id/penjualan"
+        android:title="Transaksi"
+        android:icon="@drawable/penjualan_icon" />
+
+
 
     <item android:id="@+id/add"
         android:title="" />
 
-    <item android:id="@+id/penjualan"
-        android:title="Transaksi"
-        android:icon="@drawable/penjualan_icon" />
+    <item android:id="@+id/menu"
+        android:title="Menu"
+        android:icon="@drawable/menu_icon" />
 
     <item android:id="@+id/profile"
         android:title="Profil"

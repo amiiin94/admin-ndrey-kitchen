@@ -18,8 +18,6 @@ import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.MenuModel
 import com.squareup.picasso.Picasso
 
-
-
 class MenuAdapter(private val menuList: MutableList<MenuModel>) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
 
@@ -56,8 +54,31 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
                 }
                 context.startActivity(intent)
             }
+
+            holder.ivDelete.setOnClickListener {
+                deleteMenuById(menu.id_menu, position)
+            }
         }
     }
+
+    private fun deleteMenuById(menuId: String, position: Int) {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/deleteMenuById?id=$menuId"
+        val sr = StringRequest(
+            Request.Method.DELETE,
+            urlEndPoints,
+            { response ->
+                Toast.makeText(context, "Menu deleted successfully", Toast.LENGTH_SHORT).show()
+                removeItem(position)
+            },
+            { error ->
+                Toast.makeText(context, "Error deleting menu: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        val requestQueue = Volley.newRequestQueue(context.applicationContext)
+        requestQueue.add(sr)
+    }
+
 
 
     override fun getItemCount(): Int {

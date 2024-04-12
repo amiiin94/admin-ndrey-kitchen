@@ -38,27 +38,24 @@ class MainActivity : AppCompatActivity() {
 
         // Determine which fragment to show based on the selected tab ID
         val initialFragment = when (selectedTabId) {
-            R.id.menu -> menuFragment // Navigate to the MenuFragment if selected_tab is R.id.menu
-            else -> homeFragment // Default to HomeFragment if selected_tab is not specified or invalid
+            R.id.home -> homeFragment
+            R.id.menu -> menuFragment
+            R.id.penjualan -> penjualanFragment
+            R.id.profile -> profileFragment
+            else -> homeFragment
         }
 
         makeCurrentFragment(initialFragment)
 
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.home -> {
-                    makeCurrentFragment(homeFragment)
-                }
-                R.id.menu -> {
-                    makeCurrentFragment(menuFragment)
-                }
-                R.id.penjualan -> {
-                    makeCurrentFragment(penjualanFragment)
-                }
-                R.id.profile -> {
-                    makeCurrentFragment(profileFragment)
-                }
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
+            val selectedFragment = when (item.itemId) {
+                R.id.home -> homeFragment
+                R.id.menu -> menuFragment
+                R.id.penjualan -> penjualanFragment
+                R.id.profile -> profileFragment
+                else -> homeFragment
             }
+            makeCurrentFragment(selectedFragment)
             true
         }
 
@@ -68,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

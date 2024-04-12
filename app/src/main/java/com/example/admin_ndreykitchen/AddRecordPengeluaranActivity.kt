@@ -64,7 +64,7 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         getCategory(this)
 
         ///---date picker---
-        val sdf = java.text.SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
         val currentDate = sdf.parse(sdf.format(System.currentTimeMillis())) //take current date
         date = currentDate!!.time //initialized date value to current date as the default value
         etDate.setOnClickListener {
@@ -141,20 +141,24 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         val judulEditText = findViewById<EditText>(R.id.judul_edittext)
         val jumlahPengeluaranEditText = findViewById<EditText>(R.id.jumlah_pengeluaran_editext)
         val catatanEditText = findViewById<EditText>(R.id.catatan_edittext)
-        val tanggalEditText = findViewById<EditText>(R.id.tanggal_editext)
 
         val judul = judulEditText.text.toString()
         val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString()
         val catatan = catatanEditText.text.toString()
-        val tanggal = tanggalEditText.text.toString()
+
+        val dateFromEditText = etDate.text.toString() // Get the selected date from etDate EditText
+
+        val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+        val currentTime = sdf.format(Calendar.getInstance().time) // Get the current time
+
+        val date = "$dateFromEditText $currentTime" // Combine date from EditText and current time
+
 
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/PostPengeluaran?title=" +
                 judul + "&amount=" +
                 jumlahPengeluaran + "&note=" +
                 catatan + "&date=" +
-                tanggal
-
-
+                date
 
         val sr = StringRequest(
             Request.Method.POST,
@@ -191,7 +195,4 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         val requestQueue = Volley.newRequestQueue(applicationContext)
         requestQueue.add(sr)
     }
-
-
-
 }

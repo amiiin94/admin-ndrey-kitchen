@@ -1,16 +1,16 @@
 package com.example.admin_ndreykitchen.adapter
 
 import android.content.Context
-import android.util.Log
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_ndreykitchen.R
+import com.example.admin_ndreykitchen.RecordDetailPemasukan
+import com.example.admin_ndreykitchen.RecordDetailPengeluaran
 import com.example.admin_ndreykitchen.model.ItemModel
 import com.example.admin_ndreykitchen.model.RecordModel
 
@@ -41,6 +41,41 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         // Find the corresponding ItemModel based on the record_id
         val correspondingItem = itemList.find { it.record_id == record.id_record }
         holder.item?.text = correspondingItem?.item ?: "Item not found"
+
+        // Get itemList size by id
+        val item = itemList.find { it.record_id == record.id_record }
+
+        if (item != null) {
+            val itemCount = itemList.count { it.record_id == record.id_record }
+            if (itemCount > 1) {
+                holder.tvItemSize.text = "+${itemCount - 1} menu lainnya"
+            } else {
+                holder.tvItemSize.visibility = View.INVISIBLE
+            }
+        } else {
+            holder.tvItemSize.visibility = View.INVISIBLE
+        }
+
+        holder.ivGoToDetail.setOnClickListener {
+            val detailActivityIntent = when (record.type_record) {
+                "pemasukan" -> Intent(context, RecordDetailPemasukan::class.java).apply {
+                    putExtra("id_record", record.id_record)
+                    putExtra("type_record", record.type_record)
+                    putExtra("amount_record", record.amount_record)
+                    putExtra("date_record", record.date_record)
+                    putExtra("note_record", record.note_record)
+                }
+                else -> Intent(context, RecordDetailPengeluaran::class.java).apply {
+                    putExtra("id_record", record.id_record)
+                    putExtra("title_record", record.title_record)
+                    putExtra("type_record", record.type_record)
+                    putExtra("amount_record", record.amount_record)
+                    putExtra("date_record", record.date_record)
+                    putExtra("note_record", record.note_record)
+                }
+            }
+            context.startActivity(detailActivityIntent)
+        }
     }
 
 
@@ -54,7 +89,8 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         val amountRecord: TextView = itemView.findViewById(R.id.amount_record)
         val dateRecord: TextView = itemView.findViewById(R.id.date_record)
         val item: TextView? = itemView.findViewById(R.id.item) // Use nullable TextView
-
+        val tvItemSize: TextView = itemView.findViewById(R.id.tvItemSize)
+        val ivGoToDetail: ImageView = itemView.findViewById(R.id.ivGoToDetail)
 
     }
 

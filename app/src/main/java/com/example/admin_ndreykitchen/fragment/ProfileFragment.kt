@@ -9,9 +9,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.example.admin_ndreykitchen.LoginActivity
+import com.example.admin_ndreykitchen.ModalAwalActivity
 import com.example.admin_ndreykitchen.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +34,7 @@ class ProfileFragment : Fragment() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var logout: LinearLayout
     private lateinit var picture: TextView
+    private lateinit var flModalAwal: FrameLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +76,14 @@ class ProfileFragment : Fragment() {
             // Handle the case where username is empty or null
             picture.text = ""
         }
+
+        // Modal Awal
+        flModalAwal = view.findViewById(R.id.flModalAwal)
+        flModalAwal.setOnClickListener {
+            val intent = Intent(requireContext(), ModalAwalActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
 
