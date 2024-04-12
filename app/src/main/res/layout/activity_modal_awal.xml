@@ -35,7 +35,7 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tambah Transaksi"
+                android:text="Tambah Modal Awal"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -94,7 +94,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/save_btn"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -102,6 +102,7 @@
                 android:text="Save"
                 android:textSize="14sp"
                 app:cornerRadius="12sp"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/etModalAwal" />

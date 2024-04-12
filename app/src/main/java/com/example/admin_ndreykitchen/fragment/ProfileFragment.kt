@@ -1,5 +1,6 @@
 package com.example.admin_ndreykitchen.fragment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,6 +13,10 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.LoginActivity
 import com.example.admin_ndreykitchen.ModalAwalActivity
 import com.example.admin_ndreykitchen.R
@@ -35,6 +40,7 @@ class ProfileFragment : Fragment() {
     private lateinit var logout: LinearLayout
     private lateinit var picture: TextView
     private lateinit var flModalAwal: FrameLayout
+    private lateinit var resetTransaction: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +59,32 @@ class ProfileFragment : Fragment() {
         picture = view.findViewById(R.id.picture)
         logout = view.findViewById(R.id.logout)
         logout.setOnClickListener {
-            logout()
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Confirmation")
+                .setMessage("Apakah Anda yakin ingin keluar?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    // Proceed with the action
+                    logout()
+                }
+                .setNegativeButton("No") { dialog, which ->
+
+                }
+                .show()
+        }
+
+        resetTransaction = view.findViewById(R.id.resetTransaction)
+        resetTransaction.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Confirmation")
+                .setMessage("Apakah Anda yakin ingin menghapus semua transaksi?")
+                .setPositiveButton("Yes") { dialog, which ->
+                    // Proceed with the action
+                    deleteAllRecord()
+                }
+                .setNegativeButton("No") { dialog, which ->
+
+                }
+                .show()
         }
 
         // Initialize sharedPreferences
@@ -97,6 +128,24 @@ class ProfileFragment : Fragment() {
         startActivity(intent)
         requireActivity().finish()
     }
+
+    private fun deleteAllRecord() {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/deleteAllRecord"
+        val sr = StringRequest(
+            Request.Method.DELETE,
+            urlEndPoints,
+            { response ->
+                Toast.makeText(requireContext(), "Records deleted successfully", Toast.LENGTH_SHORT).show()
+            },
+            { error ->
+                Toast.makeText(requireContext(), "Error deleting records: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        val requestQueue = Volley.newRequestQueue(requireContext().applicationContext)
+        requestQueue.add(sr)
+    }
+
 
     companion object {
         /**

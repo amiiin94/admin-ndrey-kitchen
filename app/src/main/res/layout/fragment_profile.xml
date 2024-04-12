@@ -105,7 +105,7 @@
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/category_icon" />
+                            android:src="@drawable/modal_awal_icon" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -153,7 +153,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Edit Profil"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
@@ -191,7 +191,47 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Edit Kategori"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="#D5D5D5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/frameLayout4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/flModalAwal">
+
+                    <LinearLayout
+                        android:id="@+id/resetTransaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/reset_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Reset Transaction"
+                            android:textColor="@color/orange_mainColor"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View
@@ -207,7 +247,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/flModalAwal">
+                    app:layout_constraintTop_toBottomOf="@+id/frameLayout4">
 
                     <LinearLayout
                         android:id="@+id/logout"
@@ -229,8 +269,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="Logout"
-                            android:textStyle="bold"
-                            android:textColor="#F1272A"/>
+                            android:textColor="#F1272A"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <View

@@ -1,5 +1,6 @@
 package com.example.admin_ndreykitchen.adapter
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -56,7 +58,18 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
             }
 
             holder.ivDelete.setOnClickListener {
-                deleteMenuById(menu.id_menu, position)
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Confirmation")
+                    .setMessage("Apakah Anda yakin ingin menghapus menu?")
+                    .setPositiveButton("Yes") { dialog, which ->
+                        // Proceed with the action
+                        deleteMenuById(menu.id_menu, position)
+                    }
+                    .setNegativeButton("No") { dialog, which ->
+
+                    }
+                    .show()
+
             }
         }
     }
