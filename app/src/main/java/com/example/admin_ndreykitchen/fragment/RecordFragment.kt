@@ -104,7 +104,7 @@ class RecordFragment : Fragment() {
                                 id_record,
                                 type_record,
                                 title_record,
-                                formattedHarga,
+                                amount_record,
                                 date_record,
                                 note_record
                             )

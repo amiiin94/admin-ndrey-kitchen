@@ -19,6 +19,9 @@ import com.example.admin_ndreykitchen.adapter.MenuAdapter
 import com.example.admin_ndreykitchen.model.ItemModel
 import org.json.JSONArray
 import org.json.JSONException
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 class RecordDetailPemasukan : AppCompatActivity() {
     private val itemList = mutableListOf<ItemModel>()
@@ -32,7 +35,7 @@ class RecordDetailPemasukan : AppCompatActivity() {
 
     private lateinit var _id: String
     private lateinit var date: String
-    private  lateinit var amount: String
+    private var amount: Int = 0
     private lateinit var note: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,13 +68,13 @@ class RecordDetailPemasukan : AppCompatActivity() {
         // Retrieve data from intent
         _id = intent.getStringExtra("id_record") ?: ""
         date = intent.getStringExtra("date_record") ?: ""
-        amount = intent.getStringExtra("amount_record") ?: ""
+        amount = intent.getIntExtra("amount_record", 0)
         title = intent.getStringExtra("title_record") ?: ""
         note = intent.getStringExtra("note_record") ?: ""
 
         // Set the data to the views
         tvDateDetail.setText(date)
-        tvAmountDetail.setText(amount)
+        tvAmountDetail.setText(formatToRupiah(amount))
         tvNoteDetail.setText(note)
 
 
@@ -122,5 +125,14 @@ class RecordDetailPemasukan : AppCompatActivity() {
     private fun showItem() {
         val itemMenuAdapter = ItemMenuAdapter(itemList)
         rvItem.adapter = itemMenuAdapter
+    }
+
+    private fun formatToRupiah(value: Int?): String {
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatRupiah.currency = Currency.getInstance("IDR")
+
+        val formattedValue = value?.let { formatRupiah.format(it.toLong()).replace("Rp", "").trim() }
+
+        return "Rp. $formattedValue"
     }
 }

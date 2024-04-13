@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +13,9 @@ import com.example.admin_ndreykitchen.RecordDetailPemasukan
 import com.example.admin_ndreykitchen.RecordDetailPengeluaran
 import com.example.admin_ndreykitchen.model.ItemModel
 import com.example.admin_ndreykitchen.model.RecordModel
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 class RecordAdapter(private val recordList: List<RecordModel>, private val itemList: List<ItemModel>) :
     RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
@@ -36,7 +38,7 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         val record = recordList[position]
         holder.id_record.text = record.id_record?.substring(0, 15)
         holder.titleRecord.text = record.title_record
-        holder.amountRecord.text = record.amount_record
+        holder.amountRecord.text = formatToRupiah(record.amount_record)
         holder.dateRecord.text = record.date_record
 
         // Find the corresponding ItemModel based on the record_id
@@ -92,6 +94,16 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         val cvRecord: CardView = itemView.findViewById(R.id.cvRecord)
 
     }
+
+    private fun formatToRupiah(value: Int?): String {
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatRupiah.currency = Currency.getInstance("IDR")
+
+        val formattedValue = value?.let { formatRupiah.format(it.toLong()).replace("Rp", "").trim() }
+
+        return "Rp. $formattedValue"
+    }
+
 
     companion object {
         const val TYPE_PEMASUKAN = 1
