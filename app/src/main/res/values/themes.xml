@@ -5,8 +5,18 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="android:textColorPrimary">@color/black</item>
         <item name="colorPrimary">@color/orange_mainColor</item>
-
+        <item name="android:statusBarColor">@color/orange_mainColor</item> <!-- Change status bar color -->
     </style>
+
+    <style name="Base.Theme.Admin_NdreyKitchen.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="colorPrimary">@color/orange_mainColor</item>
+        <item name="android:statusBarColor">@color/orange_mainColor</item> <!-- Change status bar color -->
+    </style>
+
+
 
     <style name="Theme.Admin_NdreyKitchen" parent="Base.Theme.Admin_NdreyKitchen" />
 </resources>
