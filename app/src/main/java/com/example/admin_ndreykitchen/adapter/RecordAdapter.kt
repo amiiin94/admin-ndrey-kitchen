@@ -2,6 +2,7 @@ package com.example.admin_ndreykitchen.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,21 +41,24 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         holder.titleRecord.text = record.title_record
         holder.amountRecord.text = formatToRupiah(record.amount_record)
         holder.dateRecord.text = record.date_record
+        holder.tvcategory.text = record.category_record
 
         // Find the corresponding ItemModel based on the record_id
         val correspondingItem = itemList.find { it.record_id == record.id_record }
+
+        // Set item name
         holder.item?.text = correspondingItem?.item ?: "Item not found"
 
-        // Get itemList size by id
-        val item = itemList.find { it.record_id == record.id_record }
+        // Get the quantity of the first item
+        val firstItemQuantity = itemList.firstOrNull { it.record_id == record.id_record }?.quantity
 
-        if (item != null) {
-            val itemCount = itemList.count { it.record_id == record.id_record }
-            if (itemCount > 1) {
-                holder.tvItemSize.text = "+${itemCount - 1} menu lainnya"
-            } else {
-                holder.tvItemSize.visibility = View.INVISIBLE
-            }
+        // Set the quantity
+        holder.quantity.text = firstItemQuantity.toString() + "x"
+
+        // Get itemList size by id
+        val itemCount = itemList.count { it.record_id == record.id_record }
+        if (itemCount > 1) {
+            holder.tvItemSize.text = "+${itemCount - 1} menu lainnya"
         } else {
             holder.tvItemSize.visibility = View.INVISIBLE
         }
@@ -73,11 +77,13 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
                     putExtra("amount_record", record.amount_record)
                     putExtra("date_record", record.date_record)
                     putExtra("note_record", record.note_record)
+                    putExtra("category_record", record.category_record)
                 }
             }
             context.startActivity(detailActivityIntent)
         }
     }
+
 
 
     override fun getItemCount(): Int {
@@ -91,7 +97,9 @@ class RecordAdapter(private val recordList: List<RecordModel>, private val itemL
         val dateRecord: TextView = itemView.findViewById(R.id.date_record)
         val item: TextView? = itemView.findViewById(R.id.item) // Use nullable TextView
         val tvItemSize: TextView = itemView.findViewById(R.id.tvItemSize)
+        val tvcategory: TextView = itemView.findViewById(R.id.tvCategory)
         val cvRecord: CardView = itemView.findViewById(R.id.cvRecord)
+        val quantity: TextView = itemView.findViewById(R.id.quantity)
 
     }
 

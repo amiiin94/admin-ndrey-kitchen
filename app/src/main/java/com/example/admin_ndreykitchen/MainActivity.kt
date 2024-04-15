@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         // Retrieve the selected tab ID from the intent
         val selectedTabId = intent.getIntExtra("selected_tab", -1)
 
+
         // Determine which fragment to show based on the selected tab ID
         val initialFragment = when (selectedTabId) {
             R.id.home -> homeFragment

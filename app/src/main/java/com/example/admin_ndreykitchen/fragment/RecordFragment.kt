@@ -97,8 +97,7 @@ class RecordFragment : Fragment() {
                             val amount_record = recordJson.getInt("amount")
                             val date_record = recordJson.getString("date")
                             val note_record = recordJson.getString("note")
-
-                            val formattedHarga: String = formatToRupiah(amount_record)
+                            val category_record = recordJson.getString("category")
 
                             val record = RecordModel(
                                 id_record,
@@ -106,7 +105,8 @@ class RecordFragment : Fragment() {
                                 title_record,
                                 amount_record,
                                 date_record,
-                                note_record
+                                note_record,
+                                category_record
                             )
                             recordList.add(record)
                         }

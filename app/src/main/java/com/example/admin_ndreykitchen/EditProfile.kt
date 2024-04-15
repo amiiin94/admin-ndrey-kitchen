@@ -1,0 +1,109 @@
+package com.example.admin_ndreykitchen
+
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
+import org.json.JSONObject
+
+// Ensure proper imports at the beginning
+
+class EditProfile : AppCompatActivity() {
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var etUsername: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etPassword: EditText
+    private lateinit var saveBtn: com.google.android.material.button.MaterialButton
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_edit_profile)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        initializeViews()
+
+        saveBtn.setOnClickListener {
+            putProfileById()
+        }
+    }
+
+    private fun initializeViews() {
+        etUsername = findViewById(R.id.etUsername)
+        etEmail = findViewById(R.id.etEmail)
+        etPassword = findViewById(R.id.etPassword)
+        saveBtn = findViewById(R.id.save_btn)
+
+        sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
+
+        val username = sharedPreferences.getString("username", "")
+        val email = sharedPreferences.getString("email", "")
+        val password = sharedPreferences.getString("password", "")
+
+        etUsername.setText(username.toString())
+        etEmail.setText(email.toString())
+        etPassword.setText(password.toString())
+    }
+
+    private fun putProfileById() {
+        val userId = sharedPreferences.getString("user_id", "")
+        val username = etUsername.text.toString()
+        val email = etEmail.text.toString()
+        val password = etPassword.text.toString()
+
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putProfileById?_id=$userId&username=$username&email=$email&password=$password"
+
+        val stringRequest = StringRequest(
+            Request.Method.PUT,
+            urlEndPoints,
+            { response ->
+                try {
+                    val jsonResponse = JSONObject(response)
+
+                    if (jsonResponse.has("error")) {
+                        val errorMessage = jsonResponse.getString("error")
+                        Toast.makeText(this@EditProfile, errorMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        val editor = sharedPreferences.edit().apply {
+                            putString("username", username)
+                            putString("email", email)
+                            putString("password", password)
+                            apply()
+                        }
+
+                        Toast.makeText(this@EditProfile, "Profile has been updated", Toast.LENGTH_SHORT).show()
+
+                        val mainActivityIntent = Intent(this@EditProfile, MainActivity::class.java).apply {
+                            putExtra("selected_tab", R.id.profile)
+                        }
+                        startActivity(mainActivityIntent)
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                    Toast.makeText(this@EditProfile, "Failed", Toast.LENGTH_SHORT).show()
+                }
+            },
+            { error ->
+                error.printStackTrace()
+                Toast.makeText(this@EditProfile, "Failed: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        Volley.newRequestQueue(this@EditProfile).add(stringRequest)
+    }
+}

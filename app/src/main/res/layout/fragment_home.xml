@@ -43,7 +43,7 @@
                             android:layout_marginTop="30dp"
                             android:text="Selamat datang, Andrey"
                             android:textColor="@color/white"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,7 +53,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="Filtered by Time"
+                            android:text="Filter berdasarkan waktu"
                             android:textColor="@color/white"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/selamatDatangNama" />
@@ -94,7 +94,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="Your Profit"
+                            android:text="Profit Penjualan"
+                            android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -105,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="5dp"
-                            android:text="+IDR 500,000,00"
+                            android:text="Loading..."
                             android:textColor="@color/ijo_gelap"
                             android:textSize="18sp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="Laporan keuangan hari ini"
+                            android:text="Laporan keuangan"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -155,6 +156,7 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Pemasukan"
+                                    android:textSize="16sp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/pemasukan_icon" />
 
@@ -167,6 +169,7 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
+                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -207,6 +210,7 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Pengeluaran"
+                                    android:textSize="16sp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/pengeluaran_icon" />
 
@@ -218,6 +222,7 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
+                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -237,15 +242,6 @@
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/cardView" />
-
-                        <TextView
-                            android:id="@+id/textView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="50dp"
-                            android:text="TextView"
-                            android:visibility="invisible"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/pengeluaran_card"
@@ -269,6 +265,7 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Total Transaksi"
+                                    android:textSize="16sp"
                                     android:textColor="@color/abu"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -281,6 +278,7 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
+                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -311,6 +309,7 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Makanan Terjual"
+                                    android:textSize="16sp"
                                     android:textColor="@color/abu"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
@@ -323,6 +322,7 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
+                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
@@ -372,7 +372,7 @@
                                     android:fontFamily="@font/poppinsmedium"
                                     android:text="Profit"
                                     android:textColor="#979797"
-                                    android:textSize="13sp" />
+                                    android:textSize="14sp" />
 
                                 <TextView
                                     android:id="@+id/netAmountRange"
@@ -380,9 +380,9 @@
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/netAmountRangeTitle"
                                     android:fontFamily="@font/poppinsmedium"
-                                    android:text="0.00"
+                                    android:text="Loading..."
                                     android:textColor="#333333"
-                                    android:textSize="22sp" />
+                                    android:textSize="20sp" />
 
                                 <com.google.android.material.card.MaterialCardView
                                     android:id="@+id/chartMenu"

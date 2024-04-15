@@ -74,26 +74,6 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
         }
     }
 
-    private fun deleteMenuById(menuId: String, position: Int) {
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/deleteMenuById?id=$menuId"
-        val sr = StringRequest(
-            Request.Method.DELETE,
-            urlEndPoints,
-            { response ->
-                Toast.makeText(context, "Menu deleted successfully", Toast.LENGTH_SHORT).show()
-                removeItem(position)
-            },
-            { error ->
-                Toast.makeText(context, "Error deleting menu: ${error.message}", Toast.LENGTH_SHORT).show()
-            }
-        )
-
-        val requestQueue = Volley.newRequestQueue(context.applicationContext)
-        requestQueue.add(sr)
-    }
-
-
-
     override fun getItemCount(): Int {
         return menuList.size
     }
@@ -110,8 +90,7 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
         val menu_detail: CardView = itemView.findViewById(R.id.menu_detail)
     }
 
-
-    private fun deleteMenuById(context: Context, menuId: String, position: Int) {
+    private fun deleteMenuById(menuId: String, position: Int) {
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/deleteMenuById?id=$menuId"
         val sr = StringRequest(
             Request.Method.DELETE,

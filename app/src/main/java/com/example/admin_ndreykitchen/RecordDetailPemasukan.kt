@@ -1,6 +1,7 @@
 package com.example.admin_ndreykitchen
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -53,6 +54,11 @@ class RecordDetailPemasukan : AppCompatActivity() {
         initializeItems()
         getAllItemListMenu()
         showItem()
+
+        back_btn.setOnClickListener{
+            val back_btn_intent = Intent(this@RecordDetailPemasukan, MainActivity::class.java)
+            startActivity((back_btn_intent))
+        }
     }
 
     private fun initializeItems() {

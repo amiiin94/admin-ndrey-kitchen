@@ -92,7 +92,6 @@ class HomeFragment : Fragment() {
         selamat_datang.text = "Selamat Datang, $username"
 
         // Setup the spinner
-        // Setup the spinner
         val timeSpanOptions = arrayOf("All Time", "This Month", "This Week", "Today")
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, timeSpanOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)

@@ -1,5 +1,6 @@
 package com.example.admin_ndreykitchen
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -39,6 +40,11 @@ class RecordDetailPengeluaran : AppCompatActivity() {
         }
 
         initializeItems()
+
+        back_btn.setOnClickListener{
+            val back_btn_intent = Intent(this@RecordDetailPengeluaran, MainActivity::class.java)
+            startActivity((back_btn_intent))
+        }
     }
 
     private fun initializeItems() {
@@ -57,7 +63,7 @@ class RecordDetailPengeluaran : AppCompatActivity() {
         date = intent.getStringExtra("date_record") ?: ""
         amount = intent.getIntExtra("amount_record", 0)
         title = intent.getStringExtra("title_record") ?: ""
-        kategori = intent.getStringExtra("kategori_record") ?: ""
+        kategori = intent.getStringExtra("category_record") ?: ""
         note = intent.getStringExtra("note_record") ?: ""
 
         // Set the data to the views
@@ -66,6 +72,7 @@ class RecordDetailPengeluaran : AppCompatActivity() {
         tvTitleDetail.setText(title)
         tvKategoriDetail.setText(kategori)
         tvNoteDetail.setText(note)
+        tvKategoriDetail.setText(kategori)
     }
 
     private fun formatToRupiah(value: Int?): String {

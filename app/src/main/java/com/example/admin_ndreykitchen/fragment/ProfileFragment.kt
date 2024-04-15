@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +16,8 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.admin_ndreykitchen.CategoryActivity
+import com.example.admin_ndreykitchen.EditProfile
 import com.example.admin_ndreykitchen.LoginActivity
 import com.example.admin_ndreykitchen.ModalAwalActivity
 import com.example.admin_ndreykitchen.R
@@ -41,6 +42,10 @@ class ProfileFragment : Fragment() {
     private lateinit var picture: TextView
     private lateinit var flModalAwal: FrameLayout
     private lateinit var resetTransaction: LinearLayout
+    private lateinit var llEditKategori: LinearLayout
+    private lateinit var name_textview: TextView
+    private lateinit var email_textview: TextView
+    private lateinit var llEditProfil: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,9 +59,26 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Initialize sharedPreferences
+        sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
+
+
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
         picture = view.findViewById(R.id.picture)
+
+        llEditProfil = view.findViewById(R.id.llEditProfil)
+        llEditProfil.setOnClickListener{
+            val intent = Intent(requireContext(), EditProfile::class.java)
+            startActivity(intent)
+        }
+
+        llEditKategori = view.findViewById(R.id.llEditKategori)
+        llEditKategori.setOnClickListener {
+            val intent = Intent(requireContext(), CategoryActivity::class.java)
+            startActivity(intent)
+        }
+
         logout = view.findViewById(R.id.logout)
         logout.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -87,8 +109,6 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
-        // Initialize sharedPreferences
-        sharedPreferences = requireActivity().getSharedPreferences("UserData", Context.MODE_PRIVATE)
 
         return view
     }
@@ -99,6 +119,13 @@ class ProfileFragment : Fragment() {
 
         // Get username from SharedPreferences
         val username = sharedPreferences.getString("username", "")
+        val email = sharedPreferences.getString("email", "")
+        name_textview = view.findViewById(R.id.name_textview)
+        email_textview = view.findViewById(R.id.email_textview)
+
+        name_textview.text = username.toString()
+        email_textview.text = email.toString()
+
 
         // Set the first letter of the username as the text of the picture TextView
         if (!username.isNullOrEmpty()) {

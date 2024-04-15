@@ -76,9 +76,12 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         save_btn.setOnClickListener{
             savePengeluaranRecord()
         }
+
+        expense_category.setOnClickListener {
+            // Show dropdown list when clicked
+            expense_category.showDropDown()
+        }
     }
-
-
 
     private fun getCategory(context: Context) {
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getAllCategory"
@@ -141,10 +144,16 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         val judulEditText = findViewById<EditText>(R.id.judul_edittext)
         val jumlahPengeluaranEditText = findViewById<EditText>(R.id.jumlah_pengeluaran_editext)
         val catatanEditText = findViewById<EditText>(R.id.catatan_edittext)
+        val etCategory = findViewById<AutoCompleteTextView>(R.id.expense_category)
 
         val judul = judulEditText.text.toString()
         val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString()
         val catatan = catatanEditText.text.toString()
+        val categoryAdapter = etCategory.adapter as ArrayAdapter<String>
+        val selectedCategory = categoryAdapter.getItem(categoryAdapter.getPosition(etCategory.text.toString()))
+
+
+
 
         val dateFromEditText = etDate.text.toString() // Get the selected date from etDate EditText
 
@@ -158,7 +167,9 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
                 judul + "&amount=" +
                 jumlahPengeluaran + "&note=" +
                 catatan + "&date=" +
-                date
+                date + "&category=" +
+                selectedCategory
+
 
         val sr = StringRequest(
             Request.Method.POST,

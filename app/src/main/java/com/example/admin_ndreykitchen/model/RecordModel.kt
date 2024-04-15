@@ -7,7 +7,7 @@ class RecordModel (
     val amount_record: Int? = 0,
     val date_record: String? = null,
     val note_record: String? = null,
-    val category_recod: String? = null
+    val category_record: String? = null
 )
 
 class ItemModel(

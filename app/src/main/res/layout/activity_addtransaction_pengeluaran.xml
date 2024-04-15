@@ -132,7 +132,8 @@
                 android:paddingVertical="16dp"
                 android:textColorHint="@color/abu"
                 android:textSize="14sp"
-
+                android:inputType="none"
+                android:focusable="false"
                 android:completionThreshold="1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
