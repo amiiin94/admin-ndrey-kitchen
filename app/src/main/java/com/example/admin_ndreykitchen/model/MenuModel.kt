@@ -8,5 +8,4 @@ data class MenuModel(
     val deskripsi_menu: String,
     val kategori_menu: String,
     var quantity: Int = 0 // Quantity of the menu item, initially set to 0
-
 )

@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.admin_ndreykitchen.AddRecordPemasukanActivity
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.MenuModel
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 class AddTransactionAdapter(
     private val menuList: MutableList<MenuModel>,
@@ -17,7 +20,6 @@ class AddTransactionAdapter(
 ) : RecyclerView.Adapter<AddTransactionAdapter.ViewHolder>() {
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val image_menu: ImageView = itemView.findViewById(R.id.image_menu)
         val tv_id: TextView = itemView.findViewById(R.id.tvId)
         val nama_menu: TextView = itemView.findViewById(R.id.nama_menu)
         val harga_menu: TextView = itemView.findViewById(R.id.harga_menu)
@@ -62,7 +64,7 @@ class AddTransactionAdapter(
         val menu = menuList[position]
         holder.tv_id.text = menu.id_menu
         holder.nama_menu.text = menu.nama_menu
-        holder.harga_menu.text = menu.harga_menu.toString()
+        holder.harga_menu.text = formatToRupiah(menu.harga_menu)
         holder.quantityTextView.text = menu.quantity.toString()
     }
 
@@ -72,6 +74,15 @@ class AddTransactionAdapter(
 
     interface QuantityChangeListener {
         fun onQuantityChanged()
+    }
+
+    private fun formatToRupiah(value: Int?): String {
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatRupiah.currency = Currency.getInstance("IDR")
+
+        val formattedValue = value?.let { formatRupiah.format(it.toLong()).replace("Rp", "").trim() }
+
+        return "Rp. $formattedValue"
     }
 
 

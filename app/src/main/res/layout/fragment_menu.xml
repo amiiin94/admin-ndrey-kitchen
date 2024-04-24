@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:text="Daftar Menu"
-                    android:textSize="16sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
                     android:id="@+id/tambah_menu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginEnd="18dp"
                     android:text="Tambah"
                     android:textColor="@color/orange_mainColor"
                     android:textStyle="bold"
@@ -69,80 +69,18 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/daftar_menu_textview" />
 
-                <HorizontalScrollView
-                    android:id="@+id/horizontalScrollView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/etSearch">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingLeft="16dp">
-
-                        <Button
-                            android:id="@+id/AllMerch"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:background="@drawable/button_gradien_rounded"
-                            android:text="Merchants"
-                            android:textSize="10sp" />
-
-                        <Button
-                            android:id="@+id/AllMerch1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_gradien_rounded"
-                            android:text="Merchants"
-                            android:textSize="10sp" />
-
-                        <Button
-                            android:id="@+id/AllMerch2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_gradien_rounded"
-                            android:text="Merchants"
-                            android:textSize="10sp" />
-
-                        <Button
-                            android:id="@+id/AllMerch3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginVertical="10dp"
-                            android:layout_marginEnd="5dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_gradien_rounded"
-                            android:text="Merchants"
-                            android:textSize="10sp" />
-                    </LinearLayout>
-                </HorizontalScrollView>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="28dp"
                     android:layout_marginBottom="1dp"
                     android:layout_weight="1"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@+id/textView3"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+                    app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
                 <TextView
                     android:id="@+id/textView3"

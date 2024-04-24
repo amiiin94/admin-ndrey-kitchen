@@ -39,9 +39,12 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.security.KeyStore
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Currency
 import java.util.Date
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
@@ -57,6 +60,7 @@ class HomeFragment : Fragment() {
     private lateinit var timeSpanOption: Spinner
 
     private var profit: Int = 0
+    private var profitInRupiah: String = ""
     private var pengeluaranAmount: Int = 0
     private var pemasukanAmount: Int = 0
 
@@ -92,7 +96,7 @@ class HomeFragment : Fragment() {
         selamat_datang.text = "Selamat Datang, $username"
 
         // Setup the spinner
-        val timeSpanOptions = arrayOf("All Time", "This Month", "This Week", "Today")
+        val timeSpanOptions = arrayOf("Semua", "Bulan Ini", "Minggu Ini", "Hari Ini")
         val adapter = ArrayAdapter(requireContext(), R.layout.spinner_item, timeSpanOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         timeSpanOption.adapter = adapter
@@ -132,15 +136,16 @@ class HomeFragment : Fragment() {
         val makananTerjual = items.filter { item -> filteredRecords.any { it.id_record == item.record_id } }
             .sumOf { it.quantity }
         profit = pemasukanAmount - pengeluaranAmount
+        profitInRupiah = formatToRupiah(profit)
 
         if (profit >= 0) {
-            tvProfit.text = "+Rp $profit"
+            tvProfit.text = profitInRupiah
         } else {
-            tvProfit.text = "-Rp ${-profit}" // Displaying negative profit as a positive value
+            tvProfit.text = profitInRupiah // Displaying negative profit as a positive value
             tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
         }
-        pemasukan.text = "Rp$pemasukanAmount"
-        pengeluaran.text = "Rp$pengeluaranAmount"
+        pemasukan.text = formatToRupiah(pemasukanAmount)
+        pengeluaran.text = formatToRupiah(pengeluaranAmount)
         total_transaksi.text = "$totalTransaksi pcs"
         makanan_terjual.text = "$makananTerjual pcs"
 
@@ -292,9 +297,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupBarChart() {
-        //Bar Chart Library Dependency : https://github.com/PhilJay/MPAndroidChart
         val netAmountRangeDate: TextView = requireView().findViewById(R.id.netAmountRange)
-        netAmountRangeDate.text = "$profit" //show the net amount on textview
+        if (profit >= 0) {
+            netAmountRangeDate.text = formatToRupiah(profit)
+        } else {
+            netAmountRangeDate.text = formatToRupiah(profit)
+            tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+        }
+
+
+         //show the net amount on textview
 
         val barChart: BarChart = requireView().findViewById(R.id.barChart)
 
@@ -343,9 +355,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupLineChart() {
-        // Line Chart Library Dependency: https://github.com/PhilJay/MPAndroidChart
         val netAmountRangeDate: TextView = requireView().findViewById(R.id.netAmountRange)
-        netAmountRangeDate.text = "$profit" // Show the net amount on textview
+        if (profit >= 0) {
+            netAmountRangeDate.text = formatToRupiah(profit)
+        } else {
+            netAmountRangeDate.text = formatToRupiah(profit)
+            tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+        }
 
         val lineChart: LineChart = requireView().findViewById(R.id.lineChart)
 
@@ -402,5 +418,14 @@ class HomeFragment : Fragment() {
         val lineData = LineData(lineDataSet)
 
         lineChart.data = lineData
+    }
+
+    private fun formatToRupiah(value: Int?): String {
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatRupiah.currency = Currency.getInstance("IDR")
+
+        val formattedValue = value?.let { formatRupiah.format(it.toLong()).replace("Rp", "").trim() }
+
+        return "Rp. $formattedValue"
     }
 }

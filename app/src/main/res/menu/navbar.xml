@@ -3,11 +3,11 @@
 
     <item android:id="@+id/home"
         android:title="Beranda"
-        android:icon="@drawable/home_icon" />
+        android:icon="@drawable/selector_home" />
 
     <item android:id="@+id/penjualan"
         android:title="Transaksi"
-        android:icon="@drawable/penjualan_icon" />
+        android:icon="@drawable/selector_transaksi" />
 
 
 
@@ -16,9 +16,9 @@
 
     <item android:id="@+id/menu"
         android:title="Menu"
-        android:icon="@drawable/menu_icon" />
+        android:icon="@drawable/selector_menu" />
 
     <item android:id="@+id/profile"
         android:title="Profil"
-        android:icon="@drawable/profil_icon" />
+        android:icon="@drawable/selector_profil" />
 </menu>

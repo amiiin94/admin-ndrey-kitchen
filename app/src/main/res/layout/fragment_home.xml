@@ -25,7 +25,7 @@
                 <FrameLayout
                     android:id="@+id/frameLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="144dp"
                     android:background="@drawable/gradien_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,8 @@
                             android:layout_marginTop="30dp"
                             android:text="Selamat datang, Andrey"
                             android:textColor="@color/white"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,7 +109,7 @@
                             android:layout_marginTop="5dp"
                             android:text="Loading..."
                             android:textColor="@color/ijo_gelap"
-                            android:textSize="18sp"
+                            android:textSize="20sp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -237,7 +238,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
                             android:layout_marginTop="16dp"
-                            android:text="Transaksi bulan ini"
+                            android:text="Keterangan Lainnya"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
@@ -369,7 +370,7 @@
                                     android:id="@+id/netAmountRangeTitle"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppinsmedium"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Profit"
                                     android:textColor="#979797"
                                     android:textSize="14sp" />
@@ -379,9 +380,9 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/netAmountRangeTitle"
-                                    android:fontFamily="@font/poppinsmedium"
+                                    android:fontFamily="@font/poppins_medium"
                                     android:text="Loading..."
-                                    android:textColor="#333333"
+                                    android:textColor="@color/ijo_gelap"
                                     android:textSize="20sp" />
 
                                 <com.google.android.material.card.MaterialCardView

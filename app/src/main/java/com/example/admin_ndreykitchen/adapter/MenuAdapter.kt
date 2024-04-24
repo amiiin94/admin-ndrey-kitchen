@@ -19,6 +19,9 @@ import com.example.admin_ndreykitchen.EditMenuActivity
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.MenuModel
 import com.squareup.picasso.Picasso
+import java.text.NumberFormat
+import java.util.Currency
+import java.util.Locale
 
 class MenuAdapter(private val menuList: MutableList<MenuModel>) :
     RecyclerView.Adapter<MenuAdapter.ViewHolder>() {
@@ -39,7 +42,7 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
         } else {
             val menu = menuList[position]
             holder.nama_menu.text = menu.nama_menu
-            holder.harga_menu.text = menu.harga_menu.toString()
+            holder.harga_menu.text = formatToRupiah(menu.harga_menu)
             holder.tvId.text = menu.id_menu
             Picasso.get().load(menu.image_menu).into(holder.image_menu)
 
@@ -112,5 +115,14 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
         menuList.removeAt(position)
         notifyItemRemoved(position)
         notifyItemRangeChanged(position, itemCount)
+    }
+
+    private fun formatToRupiah(value: Int?): String {
+        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
+        formatRupiah.currency = Currency.getInstance("IDR")
+
+        val formattedValue = value?.let { formatRupiah.format(it.toLong()).replace("Rp", "").trim() }
+
+        return "Rp. $formattedValue"
     }
 }

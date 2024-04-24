@@ -1,18 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.Admin_NdreyKitchen" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textColorPrimary">@color/black</item>
         <item name="colorPrimary">@color/orange_mainColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnTertiary">@color/white</item>
         <item name="android:statusBarColor">@color/orange_mainColor</item> <!-- Change status bar color -->
     </style>
 
     <style name="Base.Theme.Admin_NdreyKitchen.Dark" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textColorPrimary">@color/black</item>
         <item name="colorPrimary">@color/orange_mainColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnTertiary">@color/white</item>
         <item name="android:statusBarColor">@color/orange_mainColor</item> <!-- Change status bar color -->
     </style>
 

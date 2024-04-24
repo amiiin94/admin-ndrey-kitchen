@@ -8,16 +8,14 @@
 	tools:context=".MainActivity"
 	android:background="@drawable/gradien_color">
 
-	<TextView
+
+	<ImageView
+		android:id="@+id/imageView"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:text="Ndrey Kitchen"
-		android:textColor="@color/white"
-		android:textSize="32sp"
-		android:textStyle="bold"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent" />
-
+		app:layout_constraintTop_toTopOf="parent"
+		app:srcCompat="@drawable/logo_nama" />
 </androidx.constraintlayout.widget.ConstraintLayout>
