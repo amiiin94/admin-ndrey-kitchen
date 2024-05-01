@@ -46,6 +46,7 @@ import java.util.Currency
 import java.util.Date
 import java.util.Locale
 
+@Suppress("DEPRECATION")
 class HomeFragment : Fragment() {
 
     private lateinit var pemasukan: TextView
@@ -63,6 +64,7 @@ class HomeFragment : Fragment() {
     private var profitInRupiah: String = ""
     private var pengeluaranAmount: Int = 0
     private var pemasukanAmount: Int = 0
+    private var modalAwal: Int = 0
 
 
     override fun onCreateView(
@@ -129,7 +131,7 @@ class HomeFragment : Fragment() {
     private fun displayHomeFragmentData(records: List<RecordModel>, items: List<ItemModel>, timeSpan: TimeSpan) {
         val filteredRecords = filterRecordsByTimeSpan(records, timeSpan)
 
-        pemasukanAmount = filteredRecords.filter { it.type_record == "pemasukan" }.sumOf { it.amount_record ?: 0 }
+        pemasukanAmount = filteredRecords.filter { it.type_record == "pemasukan"  }.sumOf { it.amount_record ?: 0 } + modalAwal
         pengeluaranAmount = filteredRecords.filter { it.type_record == "pengeluaran" }.sumOf { it.amount_record ?: 0 }
         val totalTransaksi = filteredRecords.size
 
@@ -180,10 +182,12 @@ class HomeFragment : Fragment() {
                                 recordList.add(record)
                             }
                         }
+                        getModalAwal()
                         // Update UI with new data
                         displayHomeFragmentData(recordList, itemList, timeSpan)
                         // Fetch item list
                         getAllItemListMenu(requireContext())
+                        Log.d("recordList", recordList.toString())
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -230,6 +234,30 @@ class HomeFragment : Fragment() {
         )
         val requestQueue = Volley.newRequestQueue(context.applicationContext)
         requestQueue.add(sr)
+    }
+
+    private fun getModalAwal() {
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getModalAwal"
+        val sr = StringRequest(
+            Request.Method.GET,
+            urlEndPoints,
+            { response ->
+                try {
+
+                    modalAwal = response.toInt()
+
+                } catch (e: NumberFormatException) {
+                    e.printStackTrace()
+                }
+            },
+            { error ->
+                Toast.makeText(context, error.toString().trim(), Toast.LENGTH_SHORT).show()
+            }
+        )
+        val requestQueue = context?.applicationContext?.let { Volley.newRequestQueue(it) }
+        if (requestQueue != null) {
+            requestQueue.add(sr)
+        }
     }
 
     enum class TimeSpan {
@@ -314,7 +342,7 @@ class HomeFragment : Fragment() {
         barEntries.add(BarEntry(1f, pemasukanAmount.toFloat() ))
         barEntries.add(BarEntry(2f, pengeluaranAmount.toFloat()))
 
-        val xAxisValue= arrayListOf<String>("","Expense", "Income")
+        val xAxisValue= arrayListOf<String>("","Pemasukan", "Pengeluaran")
 
         //custom bar chart :
         barChart.animateXY(500, 500) //create bar chart animation
@@ -360,7 +388,7 @@ class HomeFragment : Fragment() {
             netAmountRangeDate.text = formatToRupiah(profit)
         } else {
             netAmountRangeDate.text = formatToRupiah(profit)
-            tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+            netAmountRangeDate.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
         }
 
         val lineChart: LineChart = requireView().findViewById(R.id.lineChart)
@@ -414,6 +442,9 @@ class HomeFragment : Fragment() {
         lineDataSet.valueTextColor = Color.BLACK
         lineDataSet.valueTextSize = 15f
         lineDataSet.mode = LineDataSet.Mode.CUBIC_BEZIER
+        lineDataSet.setDrawFilled(true)
+        lineDataSet.fillColor = resources.getColor(R.color.orange_pudar) // Set custom fill color
+
 
         val lineData = LineData(lineDataSet)
 

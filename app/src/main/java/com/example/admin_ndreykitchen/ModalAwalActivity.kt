@@ -69,7 +69,7 @@ class ModalAwalActivity : AppCompatActivity() {
     }
 
     private fun putModalAwal() {
-        val type = "modal awal"
+        val type = "modal_awal"
         val amount = etModalAwal.text.toString()
 
         val urlEndPoints =

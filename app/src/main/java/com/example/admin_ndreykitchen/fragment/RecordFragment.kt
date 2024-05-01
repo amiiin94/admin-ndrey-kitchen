@@ -132,16 +132,6 @@ class RecordFragment : Fragment() {
         rv_record.adapter = recordAdapter
     }
 
-
-    private fun formatToRupiah(value: Int): String {
-        val formatRupiah = NumberFormat.getCurrencyInstance(Locale("id", "ID"))
-        formatRupiah.currency = Currency.getInstance("IDR")
-
-        val formattedValue = formatRupiah.format(value).replace("Rp", "").trim()
-
-        return "Rp. $formattedValue"
-    }
-
     private fun getAllItemListMenu(context: Context) {
         val urlEndPoints =
             "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getItemMenu"

@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.example.admin_ndreykitchen.model.CategoryModel
+import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -93,7 +95,12 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
                     val jsonArray = JSONArray(response)
 
                     for (i in 0 until jsonArray.length()) {
-                        categoryList.add(jsonArray.getString(i))
+                        val categoryJson = jsonArray.getJSONObject(i)
+
+                        val id_category = categoryJson.getString("_id")
+                        val name_category = categoryJson.getString("category")
+
+                        categoryList.add(name_category)
                     }
                     // Log the categoryList here
                     Log.d("CategoryList", categoryList.toString())

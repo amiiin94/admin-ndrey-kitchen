@@ -45,6 +45,13 @@ class EditMenuActivity : AppCompatActivity() {
         save_btn.setOnClickListener {
             putMenuById()
         }
+
+        back_btn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("selected_tab", R.id.menu)
+            }
+            startActivity(intent)
+        }
     }
 
     private fun initializeItems() {

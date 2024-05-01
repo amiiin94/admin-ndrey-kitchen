@@ -64,11 +64,11 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("Confirmation")
                     .setMessage("Apakah Anda yakin ingin menghapus menu?")
-                    .setPositiveButton("Yes") { dialog, which ->
+                    .setPositiveButton("Ya") { dialog, which ->
                         // Proceed with the action
                         deleteMenuById(menu.id_menu, position)
                     }
-                    .setNegativeButton("No") { dialog, which ->
+                    .setNegativeButton("Tidak") { dialog, which ->
 
                     }
                     .show()

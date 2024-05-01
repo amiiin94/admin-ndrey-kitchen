@@ -22,7 +22,6 @@ import org.json.JSONObject
 class EditProfile : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var etUsername: EditText
-    private lateinit var etEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var saveBtn: com.google.android.material.button.MaterialButton
 
@@ -45,28 +44,24 @@ class EditProfile : AppCompatActivity() {
 
     private fun initializeViews() {
         etUsername = findViewById(R.id.etUsername)
-        etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         saveBtn = findViewById(R.id.save_btn)
 
         sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
 
         val username = sharedPreferences.getString("username", "")
-        val email = sharedPreferences.getString("email", "")
         val password = sharedPreferences.getString("password", "")
 
         etUsername.setText(username.toString())
-        etEmail.setText(email.toString())
         etPassword.setText(password.toString())
     }
 
     private fun putProfileById() {
         val userId = sharedPreferences.getString("user_id", "")
         val username = etUsername.text.toString()
-        val email = etEmail.text.toString()
         val password = etPassword.text.toString()
 
-        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putProfileById?_id=$userId&username=$username&email=$email&password=$password"
+        val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/putProfileById?_id=$userId&username=$username&password=$password"
 
         val stringRequest = StringRequest(
             Request.Method.PUT,
@@ -81,7 +76,6 @@ class EditProfile : AppCompatActivity() {
                     } else {
                         val editor = sharedPreferences.edit().apply {
                             putString("username", username)
-                            putString("email", email)
                             putString("password", password)
                             apply()
                         }

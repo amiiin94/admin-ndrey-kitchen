@@ -44,7 +44,7 @@
                             android:text="Selamat datang, Andrey"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins_semibold"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -130,7 +130,7 @@
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -170,8 +170,8 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
-                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
+                                    android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/pemasukan_textview" />
@@ -183,7 +183,7 @@
                             android:id="@+id/total_transaksi_card"
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
@@ -202,7 +202,7 @@
                                     android:layout_marginTop="12dp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent"
-                                    app:srcCompat="@drawable/pemasukan_icon" />
+                                    app:srcCompat="@drawable/pengeluaran_icon" />
 
                                 <TextView
                                     android:id="@+id/pengeluaran_textview"
@@ -223,8 +223,8 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
-                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
+                                    android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/pengeluaran_textview" />
@@ -249,7 +249,7 @@
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
                             app:layout_constraintStart_toStartOf="parent"
@@ -266,8 +266,8 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Total Transaksi"
-                                    android:textSize="16sp"
                                     android:textColor="@color/abu"
+                                    android:textSize="16sp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -279,8 +279,8 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
-                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
+                                    android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@id/total_transaksi_textview" />
@@ -292,7 +292,7 @@
                             android:id="@+id/makanan_terjual_card"
                             android:layout_width="160dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="16dp"
                             app:cardCornerRadius="10dp"
                             app:cardElevation="5dp"
@@ -310,8 +310,8 @@
                                     android:layout_marginStart="12dp"
                                     android:layout_marginTop="12dp"
                                     android:text="Makanan Terjual"
-                                    android:textSize="16sp"
                                     android:textColor="@color/abu"
+                                    android:textSize="16sp"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -323,8 +323,8 @@
                                     android:layout_marginTop="12dp"
                                     android:layout_marginBottom="12dp"
                                     android:text="Loading..."
-                                    android:textSize="16sp"
                                     android:textColor="@color/orange_mainColor"
+                                    android:textSize="16sp"
                                     app:layout_constraintBottom_toBottomOf="parent"
                                     app:layout_constraintStart_toStartOf="parent"
                                     app:layout_constraintTop_toBottomOf="@+id/makanan_terjual_textview" />

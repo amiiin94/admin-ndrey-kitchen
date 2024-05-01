@@ -105,12 +105,12 @@
                     android:layout_weight="1"
                     android:gravity="start"
                     android:text="+3 Menu lainnya"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
                 <ImageView
                     android:id="@+id/ivGoToDetail"
                     android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     app:srcCompat="@drawable/arrow" />
 

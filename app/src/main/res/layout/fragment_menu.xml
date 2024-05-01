@@ -28,7 +28,7 @@
                     android:layout_marginTop="30dp"
                     android:text="Daftar Menu"
                     android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_semibold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
