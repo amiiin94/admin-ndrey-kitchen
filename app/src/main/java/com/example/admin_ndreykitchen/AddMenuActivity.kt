@@ -38,7 +38,7 @@ class AddMenuActivity : AppCompatActivity() {
         initializeItems()
 
         save_btn.setOnClickListener {
-            savePengeluaranRecord()
+            saveMenu()
 
             val intent = Intent(this@AddMenuActivity, MainActivity::class.java)
             startActivity(intent)
@@ -56,7 +56,7 @@ class AddMenuActivity : AppCompatActivity() {
         back_btn = findViewById(R.id.back_btn)
     }
 
-    fun savePengeluaranRecord() {
+    fun saveMenu() {
 
         val nama = etNama.text.toString()
         val kategori = etKategori.text.toString()

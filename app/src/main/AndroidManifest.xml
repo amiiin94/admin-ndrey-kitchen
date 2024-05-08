@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Admin_NdreyKitchen"
         tools:targetApi="31">
         <activity
+            android:name=".DetailPembayaran"
+            android:exported="false" />
+        <activity
             android:name=".EditCategory"
             android:exported="false" />
         <activity
