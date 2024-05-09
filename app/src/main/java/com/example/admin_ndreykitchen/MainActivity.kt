@@ -4,12 +4,11 @@ import HomeFragment
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.admin_ndreykitchen.databinding.ActivityMainBinding
-import com.example.admin_ndreykitchen.fragment.MenuFragment
+import com.example.admin_ndreykitchen.fragment.OrderFragment
 import com.example.admin_ndreykitchen.fragment.ProfileFragment
 import com.example.admin_ndreykitchen.fragment.RecordFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val homeFragment = HomeFragment()
-        val menuFragment = MenuFragment()
+        val orderFragment = OrderFragment()
         val penjualanFragment = RecordFragment()
         val profileFragment = ProfileFragment()
 
@@ -41,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         // Determine which fragment to show based on the selected tab ID
         val initialFragment = when (selectedTabId) {
             R.id.home -> homeFragment
-            R.id.menu -> menuFragment
+            R.id.menu -> orderFragment
             R.id.penjualan -> penjualanFragment
             R.id.profile -> profileFragment
             else -> homeFragment
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             val selectedFragment = when (item.itemId) {
                 R.id.home -> homeFragment
-                R.id.menu -> menuFragment
+                R.id.menu -> orderFragment
                 R.id.penjualan -> penjualanFragment
                 R.id.profile -> profileFragment
                 else -> homeFragment

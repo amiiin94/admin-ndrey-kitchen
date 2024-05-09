@@ -87,12 +87,51 @@
                 android:layout_height="match_parent">
 
                 <FrameLayout
-                    android:id="@+id/flModalAwal"
+                    android:id="@+id/flEditMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/frameLayout5">
+
+                    <LinearLayout
+                        android:id="@+id/llEditMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginVertical="12dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/modal_awal_icon" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="Edit Menu"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="bottom"
+                        android:background="#D5D5D5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flModalAwal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/flEditMenu">
 
                     <LinearLayout
                         android:layout_width="match_parent"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.MenuFragment"
+    tools:context=".fragment.OrderFragment"
     android:background="@color/abu_bg">
 
     <!-- TODO: Update blank fragment layout -->

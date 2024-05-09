@@ -1,63 +1,39 @@
-package com.example.admin_ndreykitchen.fragment
+package com.example.admin_ndreykitchen
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.privacysandbox.tools.core.model.Method
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.admin_ndreykitchen.AddMenuActivity
-import com.example.admin_ndreykitchen.R
+
 import com.example.admin_ndreykitchen.adapter.MenuAdapter
+import com.example.admin_ndreykitchen.fragment.SpaceItemDecoration
 import com.example.admin_ndreykitchen.model.MenuModel
 import org.json.JSONArray
 import org.json.JSONException
 
+class MenuActivity : AppCompatActivity() {
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-class MenuFragment : Fragment() {
-    private var param1: String? = null
-    private var param2: String? = null
     private val menuList = mutableListOf<MenuModel>()
     private lateinit var rv_menu: RecyclerView
     private lateinit var tambah_menu: TextView
     private lateinit var etSearch: EditText
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+        setContentView(R.layout.activity_menu)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_menu, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        rv_menu = view.findViewById(R.id.rv_menu)
-        rv_menu.layoutManager = GridLayoutManager(requireContext(), 1)
+        rv_menu = findViewById(R.id.rv_menu)
+        rv_menu.layoutManager = GridLayoutManager(this, 1)
 
         val horizontalSpace = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
         val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
@@ -68,32 +44,31 @@ class MenuFragment : Fragment() {
         rv_menu.adapter = menuAdapter
 
         // Tambah Menu
-        tambah_menu = view.findViewById(R.id.tambah_menu)
+        tambah_menu = findViewById(R.id.tambah_menu)
         tambah_menu.setOnClickListener {
-            val intent = Intent(requireContext(), AddMenuActivity::class.java)
+            val intent = Intent(this, AddMenuActivity::class.java)
             startActivity(intent)
         }
 
         // Search
-        etSearch = view.findViewById(R.id.etSearch)
+        etSearch = findViewById(R.id.etSearch)
         etSearch.setOnEditorActionListener { v, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 val searchName: String = etSearch.text.toString()
                 if (searchName.isNotEmpty()) {
-                    getMenuByName(requireContext(), searchName)
+                    getMenuByName(searchName)
                 } else {
-                    getAllMenus(requireContext())
+                    getAllMenus()
                 }
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
         }
 
-
-        getAllMenus(requireContext())
+        getAllMenus()
     }
 
-    private fun getAllMenus(context: Context) {
+    private fun getAllMenus() {
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getAllMenus"
         val sr = StringRequest(
             Request.Method.GET,
@@ -112,32 +87,29 @@ class MenuFragment : Fragment() {
                         val deskripsi_menu = menuJson.getString("deskripsi")
                         val kategori_menu = menuJson.getString("kategori")
 
-
                         val menu = MenuModel(id_menu, nama_menu, harga_menu, images, deskripsi_menu, kategori_menu)
                         menuList.add(menu)
                     }
-                    Log.d("MenuFragment", "menuList: $menuList")
+                    Log.d("MenuActivity", "menuList: $menuList")
                     displayMenu()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
             { error ->
-                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
         )
-        val requestQueue = Volley.newRequestQueue(context.applicationContext)
+        val requestQueue = Volley.newRequestQueue(applicationContext)
         requestQueue.add(sr)
     }
-
 
     private fun displayMenu() {
         val menuAdapter = MenuAdapter(menuList)
         rv_menu.adapter = menuAdapter
     }
 
-
-    private fun getMenuByName(context: Context, nama: String) {
+    private fun getMenuByName(nama: String) {
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/getMenuByName?nama=$nama"
         val sr = StringRequest(
             Request.Method.GET,
@@ -156,21 +128,20 @@ class MenuFragment : Fragment() {
                         val deskripsi_menu = menuJson.getString("deskripsi")
                         val kategori_menu = menuJson.getString("kategori")
 
-
                         val menu = MenuModel(id_menu, nama_menu, harga_menu, images, deskripsi_menu, kategori_menu)
                         menuList.add(menu)
                     }
-                    Log.d("MenuFragment", "menuList: $menuList")
+                    Log.d("MenuActivity", "menuList: $menuList")
                     displayMenu()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
             },
             { error ->
-                Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT).show()
             }
         )
-        val requestQueue = Volley.newRequestQueue(context)
+        val requestQueue = Volley.newRequestQueue(this)
         requestQueue.add(sr)
     }
 }

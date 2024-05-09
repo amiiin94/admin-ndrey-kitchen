@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.CategoryActivity
 import com.example.admin_ndreykitchen.EditProfile
 import com.example.admin_ndreykitchen.LoginActivity
+import com.example.admin_ndreykitchen.MenuActivity
 import com.example.admin_ndreykitchen.ModalAwalActivity
 import com.example.admin_ndreykitchen.R
 
@@ -33,9 +34,6 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var logout: LinearLayout
@@ -46,13 +44,11 @@ class ProfileFragment : Fragment() {
     private lateinit var name_textview: TextView
     private lateinit var email_textview: TextView
     private lateinit var llEditProfil: LinearLayout
+    private lateinit var llEditMenu: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -109,6 +105,11 @@ class ProfileFragment : Fragment() {
                 .show()
         }
 
+        llEditMenu = view.findViewById(R.id.llEditMenu)
+        llEditMenu.setOnClickListener {
+            val intent = Intent(requireContext(), MenuActivity::class.java)
+            startActivity(intent)
+        }
 
         return view
     }
@@ -171,26 +172,5 @@ class ProfileFragment : Fragment() {
 
         val requestQueue = Volley.newRequestQueue(requireContext().applicationContext)
         requestQueue.add(sr)
-    }
-
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
