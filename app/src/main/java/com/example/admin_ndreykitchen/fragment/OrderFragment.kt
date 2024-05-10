@@ -40,7 +40,7 @@ class OrderFragment : Fragment() {
     private val orderList = mutableListOf<OrderModel>()
     private val orderItemList = mutableListOf<OrderItemModel>()
     private lateinit var rvOrder: RecyclerView
-    private lateinit var sharedPreferences: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +81,7 @@ class OrderFragment : Fragment() {
 
                             val id_order = orderJson.getString("_id")
                             val id_user = orderJson.getString("id_user")
+                            val fullname = orderJson.getString("fullname")
                             val amount_order = orderJson.getInt("amount")
                             val date_order = orderJson.getString("date")
                             val payment_order = orderJson.getString("payment")
@@ -89,6 +90,7 @@ class OrderFragment : Fragment() {
                             val orders = OrderModel(
                                 id_order,
                                 id_user,
+                                fullname,
                                 amount_order,
                                 date_order,
                                 payment_order,
@@ -129,7 +131,7 @@ class OrderFragment : Fragment() {
                             val id_orderItem = orderItemJson.getString("_id")
                             val id_order = orderItemJson.getString("id_order")
                             val item_orderItem = orderItemJson.getString("item")
-                            val quantity_orderItem = orderItemJson.getString("quantity")
+                            val quantity_orderItem = orderItemJson.getInt("quantity")
 
                             val orderItem = OrderItemModel(id_orderItem, id_order, item_orderItem, quantity_orderItem)
                             orderItemList.add(orderItem)

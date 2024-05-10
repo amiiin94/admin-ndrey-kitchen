@@ -1,12 +1,14 @@
 package com.example.admin_ndreykitchen.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.admin_ndreykitchen.OrderDetail
 import com.example.admin_ndreykitchen.R
 import com.example.admin_ndreykitchen.model.OrderItemModel
 import com.example.admin_ndreykitchen.model.OrderModel
@@ -26,14 +28,13 @@ class OrderAdapter(private val orderList: List<OrderModel>, private val orderIte
         return ViewHolder(orderView)
     }
 
-    // Inside onBindViewHolder method of RecordAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = orderList[position]
         holder.status_order.text = order.status_order
         holder.amount_order.text = formatToRupiah(order.amount_order)
         holder.date_order.text = order.date_order
 
-        // Find the corresponding ItemModel based on the record_id
+        // Find the corresponding ItemModel based on the order_id
         val correspondingItem = orderItemList.find { it.id_order == order.id_order }
 
         // Set item name
@@ -46,24 +47,28 @@ class OrderAdapter(private val orderList: List<OrderModel>, private val orderIte
         holder.quantity_order.text = firstItemQuantity.toString() + "x"
 
         // Get itemList size by id
-        val itemCount = orderList.count { it.id_order == order.id_order }
+        val itemCount = orderItemList.count { it.id_order == order.id_order }
         if (itemCount > 1) {
             holder.itemSize.text = "+${itemCount - 1} menu lainnya"
+            holder.itemSize.visibility = View.VISIBLE // Ensure it's visible if there are more items
         } else {
             holder.itemSize.visibility = View.INVISIBLE
         }
 
-//        holder.detail_order.setOnClickListener {
-//            Intent(context, RecordDetailPemasukan::class.java).apply {
-//                putExtra("id_record", record.id_record)
-//                putExtra("amount_record", record.amount_record)
-//                putExtra("date_record", record.date_record)
-//                putExtra("note_record", record.note_record)
-//            }
-//
-//            context.startActivity(detailActivityIntent)
-//        }
+        holder.detail_order.setOnClickListener {
+            val detailActivityIntent = Intent(context, OrderDetail::class.java).apply {
+                putExtra("id_order", order.id_order)
+                putExtra("fullname_order", order.fullname_order)
+                putExtra("date_order", order.date_order)
+                putExtra("amount_order", order.amount_order)
+                putExtra("status_order", order.status_order)
+                putExtra("Payment_order", order.payment_order)
+            }
+
+            context.startActivity(detailActivityIntent)
+        }
     }
+
 
 
     override fun getItemCount(): Int {

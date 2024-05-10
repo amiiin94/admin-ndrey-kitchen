@@ -19,7 +19,7 @@
             android:name=".MenuActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailPembayaran"
+            android:name=".OrderDetail"
             android:exported="false" />
         <activity
             android:name=".EditCategory"
