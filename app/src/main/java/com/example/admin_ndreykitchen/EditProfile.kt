@@ -74,18 +74,12 @@ class EditProfile : AppCompatActivity() {
                         val errorMessage = jsonResponse.getString("error")
                         Toast.makeText(this@EditProfile, errorMessage, Toast.LENGTH_SHORT).show()
                     } else {
-                        val editor = sharedPreferences.edit().apply {
-                            putString("username", username)
-                            putString("password", password)
-                            apply()
-                        }
+                        val editor = sharedPreferences.edit()
+                        editor.putString("username", username)
+                        editor.putString("password", password)
+                        editor.apply()
 
                         Toast.makeText(this@EditProfile, "Profile has been updated", Toast.LENGTH_SHORT).show()
-
-                        val mainActivityIntent = Intent(this@EditProfile, MainActivity::class.java).apply {
-                            putExtra("selected_tab", R.id.profile)
-                        }
-                        startActivity(mainActivityIntent)
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()

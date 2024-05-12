@@ -65,8 +65,6 @@ class RecordFragment : Fragment() {
         val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
         rv_record.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
-
-        getAllItemListMenu(requireContext())
         getAllrecords(requireContext())
     }
 
@@ -110,7 +108,7 @@ class RecordFragment : Fragment() {
                             )
                             recordList.add(record)
                         }
-                        displayRecords()
+                        getAllItemListMenu(requireContext())
                         Log.d("RecordFragment", "recordList: $recordList")
 
                     }
@@ -154,12 +152,12 @@ class RecordFragment : Fragment() {
                             val record = ItemModel(_id, record_id, item, quantity)
                             itemList.add(record)
                         }
-
                     }
-
+                    displayRecords()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
+
             },
             { error ->
                 Toast.makeText(context, error.toString().trim { it <= ' ' }, Toast.LENGTH_SHORT)

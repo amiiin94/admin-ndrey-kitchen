@@ -18,11 +18,14 @@ import java.text.NumberFormat
 import java.util.Currency
 import java.util.Locale
 
-class RecordAdapter(private val recordList: List<RecordModel>, private val itemList: List<ItemModel>) :
+class RecordAdapter(private var recordList: List<RecordModel>, private val itemList: List<ItemModel>) :
     RecyclerView.Adapter<RecordAdapter.ViewHolder>() {
 
     private lateinit var context: Context
-
+    init {
+        // Reverse the order list
+        recordList = recordList.reversed()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
         val inflater = LayoutInflater.from(context)

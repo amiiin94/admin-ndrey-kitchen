@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -31,6 +34,7 @@ import org.json.JSONException
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val REFRESH_INTERVAL = 30000L // 30 seconds in milliseconds
 
 class OrderFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -40,6 +44,9 @@ class OrderFragment : Fragment() {
     private val orderList = mutableListOf<OrderModel>()
     private val orderItemList = mutableListOf<OrderItemModel>()
     private lateinit var rvOrder: RecyclerView
+    private lateinit var ivRefresh: ImageView
+    private val handler = Handler(Looper.getMainLooper())
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +68,29 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         rvOrder = view.findViewById(R.id.rvOrder)
 
+        rvOrder.layoutManager = GridLayoutManager(requireContext(), 1)
+
+        val horizontalSpace =resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
+        val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
+        rvOrder.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
+
         getAllOrderList(requireContext())
-        getOrderById(requireContext())
+
+        ivRefresh = view.findViewById(R.id.ivRefresh)
+        ivRefresh.setOnClickListener {
+            getAllOrderList(requireContext())
+        }
+
+        scheduleRefresh()
+    }
+
+    private fun scheduleRefresh() {
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                getAllOrderList(requireContext())
+                handler.postDelayed(this, REFRESH_INTERVAL)
+            }
+        }, REFRESH_INTERVAL)
     }
 
     private fun getOrderById(context: Context) {
@@ -137,6 +165,7 @@ class OrderFragment : Fragment() {
                             orderItemList.add(orderItem)
                         }
                         Log.d("OrderFragment", "recordList: $orderItemList")
+                        getOrderById(requireContext())
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -152,13 +181,12 @@ class OrderFragment : Fragment() {
     }
 
     private fun displayRecords() {
-        rvOrder.layoutManager = GridLayoutManager(requireContext(), 1)
-
-        val horizontalSpace =resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
-        val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
-        rvOrder.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
-
         val orderAdapter = OrderAdapter(orderList, orderItemList)
         rvOrder.adapter = orderAdapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacksAndMessages(null)
     }
 }
