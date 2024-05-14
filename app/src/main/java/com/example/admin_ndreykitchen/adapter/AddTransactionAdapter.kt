@@ -34,10 +34,10 @@ class AddTransactionAdapter(
                 quantity++
                 quantityTextView.text = quantity.toString()
                 menuList[adapterPosition].quantity = quantity // Update quantity in the corresponding MenuModel
-                if (activity.isFirstClick) {
-                    activity.postIdRecord()
-                    activity.isFirstClick = false // Update the flag to indicate that the button has been clicked
-                }
+//                if (activity.isFirstClick) {
+//                    activity.postIdRecord()
+//                    activity.isFirstClick = false // Update the flag to indicate that the button has been clicked
+//                }
                 quantityChangeListener.onQuantityChanged() // Notify activity of quantity change
             }
 

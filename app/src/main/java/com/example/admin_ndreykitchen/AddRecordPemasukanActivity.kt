@@ -72,8 +72,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
         //save record
         save_btn = findViewById(R.id.save_btn)
         save_btn.setOnClickListener {
-            putAmount(totalHarga)
-            postItemsWithQuantity()
+            postIdRecord()
         }
     }
 
@@ -156,6 +155,8 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                    putAmount(totalHarga)
+                    postItemsWithQuantity()
                 } catch (e: JSONException) {
                     // Handle JSON parsing error
                     e.printStackTrace()
