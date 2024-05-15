@@ -85,7 +85,7 @@ class OrderAdapter(private var orderList: List<OrderModel>, private val orderIte
         val orderItem_order: TextView = itemView.findViewById(R.id.orderItem_order)
         val quantity_order: TextView = itemView.findViewById(R.id.quantity_order)
         val itemSize: TextView = itemView.findViewById(R.id.tvItemSize)
-        val detail_order: ImageView = itemView.findViewById(R.id.ivGoToDetail)
+        val detail_order: androidx.cardview.widget.CardView = itemView.findViewById(R.id.ivGoToDetail)
         val amount_order: TextView = itemView.findViewById(R.id.amount_order)
 
 

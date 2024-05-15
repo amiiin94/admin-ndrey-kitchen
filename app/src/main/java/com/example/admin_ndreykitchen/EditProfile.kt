@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -24,6 +25,7 @@ class EditProfile : AppCompatActivity() {
     private lateinit var etUsername: EditText
     private lateinit var etPassword: EditText
     private lateinit var saveBtn: com.google.android.material.button.MaterialButton
+    private lateinit var back_btn: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +42,19 @@ class EditProfile : AppCompatActivity() {
         saveBtn.setOnClickListener {
             putProfileById()
         }
+
+        back_btn.setOnClickListener {
+            val mainActivityIntent = Intent(this@EditProfile, MainActivity::class.java)
+            mainActivityIntent.putExtra("selected_tab", R.id.profile)
+            startActivity(mainActivityIntent)
+        }
     }
 
     private fun initializeViews() {
         etUsername = findViewById(R.id.etUsername)
         etPassword = findViewById(R.id.etPassword)
         saveBtn = findViewById(R.id.save_btn)
+        back_btn = findViewById(R.id.back_btn)
 
         sharedPreferences = getSharedPreferences("UserData", Context.MODE_PRIVATE)
 

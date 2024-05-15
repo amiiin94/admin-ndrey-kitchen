@@ -6,7 +6,7 @@
     android:paddingBottom="5dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvorder"
+        android:id="@+id/ivGoToDetail"
         android:layout_width="match_parent"
         android:layout_height="180dp"
         android:layout_marginStart="16dp"
@@ -101,7 +101,6 @@
                     android:text="+3 Menu lainnya" />
 
                 <ImageView
-                    android:id="@+id/ivGoToDetail"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_weight="1"

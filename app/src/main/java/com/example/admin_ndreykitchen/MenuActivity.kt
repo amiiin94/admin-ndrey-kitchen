@@ -1,10 +1,12 @@
 package com.example.admin_ndreykitchen
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,7 +29,9 @@ class MenuActivity : AppCompatActivity() {
     private lateinit var rv_menu: RecyclerView
     private lateinit var tambah_menu: TextView
     private lateinit var etSearch: EditText
+    private lateinit var back_btn: ImageView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -63,6 +67,13 @@ class MenuActivity : AppCompatActivity() {
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
+        }
+
+        back_btn = findViewById(R.id.back_btn)
+        back_btn.setOnClickListener {
+            val mainActivityIntent = Intent(this@MenuActivity, MainActivity::class.java)
+            mainActivityIntent.putExtra("selected_tab", R.id.profile)
+            startActivity(mainActivityIntent)
         }
 
         getAllMenus()

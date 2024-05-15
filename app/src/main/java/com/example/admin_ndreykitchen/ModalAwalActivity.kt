@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,7 @@ import org.json.JSONObject
 class ModalAwalActivity : AppCompatActivity() {
     private lateinit var etModalAwal: EditText
     private lateinit var save_btn: Button
+    private lateinit var back_btn: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,6 +37,13 @@ class ModalAwalActivity : AppCompatActivity() {
         save_btn = findViewById(R.id.save_btn)
         save_btn.setOnClickListener {
             putModalAwal()
+        }
+
+        back_btn = findViewById(R.id.back_btn)
+        back_btn.setOnClickListener {
+            val mainActivityIntent = Intent(this@ModalAwalActivity, MainActivity::class.java)
+            mainActivityIntent.putExtra("selected_tab", R.id.profile)
+            startActivity(mainActivityIntent)
         }
     }
 
