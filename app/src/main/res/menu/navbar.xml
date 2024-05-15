@@ -13,7 +13,7 @@
         android:title="" />
 
     <item android:id="@+id/penjualan"
-        android:title="Riwayat"
+        android:title="Pencatatan"
         android:icon="@drawable/selector_transaksi" />
 
     <item android:id="@+id/profile"
