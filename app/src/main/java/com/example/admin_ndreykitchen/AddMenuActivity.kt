@@ -42,7 +42,7 @@ class AddMenuActivity : AppCompatActivity() {
         save_btn.setOnClickListener {
             saveMenu()
 
-            val intent = Intent(this@AddMenuActivity, MainActivity::class.java)
+            val intent = Intent(this@AddMenuActivity, MenuActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -63,7 +63,7 @@ class AddMenuActivity : AppCompatActivity() {
         val nama = etNama.text.toString()
         val kategori = etKategori.text.toString()
         val harga = etHarga.text.toString()
-        val deskripsi = etKategori.text.toString()
+        val deskripsi = etDeskripsi.text.toString()
         val image = etImage.text.toString()
 
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/postMenu?nama=$nama&kategori=$kategori&harga=$harga&deskripsi=$deskripsi&image=$image"

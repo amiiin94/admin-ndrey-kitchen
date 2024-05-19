@@ -2,6 +2,7 @@ package com.example.admin_ndreykitchen
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -110,8 +111,7 @@ class EditMenuActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        val mainActivityIntent = Intent(this@EditMenuActivity, MainActivity::class.java)
-                        mainActivityIntent.putExtra("selected_tab", R.id.menu)
+                        val mainActivityIntent = Intent(this@EditMenuActivity, MenuActivity::class.java)
                         startActivity(mainActivityIntent)
 
                     }

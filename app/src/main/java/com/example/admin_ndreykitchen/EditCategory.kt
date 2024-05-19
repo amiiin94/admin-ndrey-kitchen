@@ -33,7 +33,7 @@ class EditCategory : AppCompatActivity() {
         initializeItem()
 
         back_btn.setOnClickListener {
-            val mainActivityIntent = Intent(this@EditCategory, MainActivity::class.java)
+            val mainActivityIntent = Intent(this@EditCategory, CategoryActivity::class.java)
             mainActivityIntent.putExtra("selected_tab", R.id.profile)
             startActivity(mainActivityIntent)
         }

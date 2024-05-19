@@ -169,7 +169,7 @@ class OrderDetail : AppCompatActivity() {
             { response ->
                 if (response == "\"Status Updated.\"") {
                     // Update successful
-                    Toast.makeText(this@OrderDetail, "Amount Updated", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@OrderDetail, "Amount Updated", Toast.LENGTH_SHORT).show()
 
                     // Redirect to the main activity
                     val mainActivityIntent = Intent(this@OrderDetail, MainActivity::class.java)
