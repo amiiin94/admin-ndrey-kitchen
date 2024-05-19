@@ -84,7 +84,7 @@ class EditMenuActivity : AppCompatActivity() {
         val nama = etNama.text.toString()
         val kategori = etKategori.text.toString()
         val harga = etHarga.text.toString()
-        val deskripsi = etKategori.text.toString()
+        val deskripsi = etDeskripsi.text.toString()
         val image = etImage.text.toString()
 
         val urlEndPoints =

@@ -44,7 +44,9 @@ class MenuAdapter(private val menuList: MutableList<MenuModel>) :
             holder.nama_menu.text = menu.nama_menu
             holder.harga_menu.text = formatToRupiah(menu.harga_menu)
             holder.tvId.text = menu.id_menu
-            Picasso.get().load(menu.image_menu).into(holder.image_menu)
+            if (menu.image_menu != "") {
+                Picasso.get().load(menu.image_menu).into(holder.image_menu)
+            }
 
             holder.ivEdit.setOnClickListener {
                 val intent = Intent(context, EditMenuActivity::class.java).apply {
