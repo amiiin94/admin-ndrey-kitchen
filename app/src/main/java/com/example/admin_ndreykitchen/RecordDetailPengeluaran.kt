@@ -19,8 +19,6 @@ class RecordDetailPengeluaran : AppCompatActivity() {
     private lateinit var tvKategoriDetail: TextView
     private lateinit var tvNoteDetail: TextView
     private lateinit var back_btn: ImageButton
-    private lateinit var edit_btn: ImageButton
-    private lateinit var delete_btn: ImageButton
 
     private lateinit var _id: String
     private lateinit var date: String
@@ -54,8 +52,6 @@ class RecordDetailPengeluaran : AppCompatActivity() {
         tvKategoriDetail = findViewById(R.id.tvKategoriDetail)
         tvNoteDetail = findViewById(R.id.tvCatatanDetail)
         back_btn = findViewById(R.id.back_btn)
-        edit_btn = findViewById(R.id.edit_btn)
-        delete_btn = findViewById(R.id.delete_btn)
 
 
         // Retrieve data from intent

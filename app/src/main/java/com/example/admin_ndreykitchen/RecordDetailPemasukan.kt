@@ -29,15 +29,11 @@ class RecordDetailPemasukan : AppCompatActivity() {
     private lateinit var rvItem: RecyclerView
     private lateinit var tvDateDetail: TextView
     private lateinit var tvAmountDetail: TextView
-    private lateinit var tvNoteDetail: TextView
     private lateinit var back_btn: ImageButton
-    private lateinit var edit_btn: ImageButton
-    private lateinit var delete_btn: ImageButton
 
     private lateinit var _id: String
     private lateinit var date: String
     private var amount: Int = 0
-    private lateinit var note: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -65,10 +61,7 @@ class RecordDetailPemasukan : AppCompatActivity() {
         rvItem = findViewById(R.id.rvItem)
         tvDateDetail = findViewById(R.id.tvDateDetail)
         tvAmountDetail = findViewById(R.id.tvAmountDetail)
-        tvNoteDetail = findViewById(R.id.tvNoteDetail)
         back_btn = findViewById(R.id.back_btn)
-        edit_btn = findViewById(R.id.edit_btn)
-        delete_btn = findViewById(R.id.delete_btn)
 
 
         // Retrieve data from intent
@@ -76,12 +69,10 @@ class RecordDetailPemasukan : AppCompatActivity() {
         date = intent.getStringExtra("date_record") ?: ""
         amount = intent.getIntExtra("amount_record", 0)
         title = intent.getStringExtra("title_record") ?: ""
-        note = intent.getStringExtra("note_record") ?: ""
 
         // Set the data to the views
         tvDateDetail.setText(date)
         tvAmountDetail.setText(formatToRupiah(amount))
-        tvNoteDetail.setText(note)
 
 
     }
