@@ -146,7 +146,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                     if (jsonResponse.has("error")) {
                         val errorMessage = jsonResponse.getString("error")
                         // Display toast with the error message
-                        Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         // Registration successful
                         Toast.makeText(
@@ -160,7 +160,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                 } catch (e: JSONException) {
                     // Handle JSON parsing error
                     e.printStackTrace()
-                    Toast.makeText(this@AddRecordPemasukanActivity, "failed", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@AddRecordPemasukanActivity, "failed", Toast.LENGTH_SHORT).show()
                 }
             }
         ) { Toast.makeText(this@AddRecordPemasukanActivity, "Registration failed", Toast.LENGTH_SHORT).show() }
@@ -187,7 +187,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                     startActivity(mainActivityIntent)
                 } else {
                     // Display toast with the response message
-                    Toast.makeText(this@AddRecordPemasukanActivity, response, Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@AddRecordPemasukanActivity, response, Toast.LENGTH_SHORT).show()
                 }
             },
             { error ->
@@ -218,7 +218,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                         Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         // Post successful
-                        Toast.makeText(this@AddRecordPemasukanActivity, "Item posted successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@AddRecordPemasukanActivity, "Pemasukan telah ditambah", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     // Handle JSON parsing error

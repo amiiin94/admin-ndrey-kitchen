@@ -32,11 +32,12 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/id_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ID00346475" />
+                    android:text="Pemasukan"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/date_record"
@@ -44,6 +45,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:textColor="@color/white"
                     android:text="13 Maret 2024 16:30" />
 
             </LinearLayout>

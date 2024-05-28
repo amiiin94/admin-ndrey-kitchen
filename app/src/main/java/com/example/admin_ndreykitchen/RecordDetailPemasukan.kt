@@ -17,6 +17,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.admin_ndreykitchen.adapter.ItemMenuAdapter
 import com.example.admin_ndreykitchen.adapter.MenuAdapter
+import com.example.admin_ndreykitchen.fragment.SpaceItemDecoration
 import com.example.admin_ndreykitchen.model.ItemModel
 import org.json.JSONArray
 import org.json.JSONException
@@ -46,6 +47,10 @@ class RecordDetailPemasukan : AppCompatActivity() {
 
         rvItem = findViewById(R.id.rvItem)
         rvItem.layoutManager = LinearLayoutManager(this)
+
+        val horizontalSpace = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin)
+        val verticalSpace = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin)
+        rvItem.addItemDecoration(SpaceItemDecoration(horizontalSpace, verticalSpace))
 
         initializeItems()
         getAllItemListMenu()

@@ -44,4 +44,19 @@
         <item name="colorSurfaceContainerHigh">@color/md_theme_surfaceContainerHigh</item>
         <item name="colorSurfaceContainerHighest">@color/md_theme_surfaceContainerHighest</item>
     </style>
+
+    <!-- Custom style for DatePickerDialog -->
+    <style name="MyDatePickerDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorAccent">@color/orange_mainColor</item> <!-- Change the accent color -->
+        <!-- Add other custom attributes as needed -->
+    </style>
+
+    <!-- Custom style for TimePickerDialog -->
+    <style name="MyTimePickerDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
+        <item name="colorAccent">@color/orange_mainColor</item> <!-- Change the accent color -->
+        <!-- Add other custom attributes as needed -->
+    </style>
+
+
+
 </resources>

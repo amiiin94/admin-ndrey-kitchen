@@ -142,6 +142,7 @@ class HomeFragment : Fragment() {
 
         if (profit >= 0) {
             tvProfit.text = profitInRupiah
+            tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_green_light))
         } else {
             tvProfit.text = profitInRupiah // Displaying negative profit as a positive value
             tvProfit.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))

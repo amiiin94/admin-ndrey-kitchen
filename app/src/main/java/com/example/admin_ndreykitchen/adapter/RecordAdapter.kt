@@ -40,7 +40,6 @@ class RecordAdapter(private var recordList: List<RecordModel>, private val itemL
     // Inside onBindViewHolder method of RecordAdapter
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val record = recordList[position]
-        holder.id_record.text = record.id_record?.substring(0, 15)
         holder.titleRecord.text = record.title_record
         holder.amountRecord.text = formatToRupiah(record.amount_record)
         holder.dateRecord.text = record.date_record
@@ -94,7 +93,6 @@ class RecordAdapter(private var recordList: List<RecordModel>, private val itemL
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val id_record: TextView = itemView.findViewById(R.id.id_record)
         val titleRecord: TextView = itemView.findViewById(R.id.title_record)
         val amountRecord: TextView = itemView.findViewById(R.id.amount_record)
         val dateRecord: TextView = itemView.findViewById(R.id.date_record)

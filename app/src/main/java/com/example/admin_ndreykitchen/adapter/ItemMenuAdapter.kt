@@ -37,7 +37,7 @@ class ItemMenuAdapter(private val itemList: List<ItemModel>) :
 
         fun bind(item: ItemModel) {
             tvItem.text = item.item
-            tvQuantity.text = item.quantity.toString()
+            tvQuantity.text = "(" + item.quantity.toString() + "x)"
         }
     }
 }

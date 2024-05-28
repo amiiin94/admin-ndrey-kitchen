@@ -41,11 +41,12 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/id_record"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="ID00346475" />
+                    android:text="Pengeluaran"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/white"/>
 
                 <TextView
                     android:id="@+id/date_record"
@@ -53,6 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:textColor="@color/white"
                     android:text="13 Maret 2024 16:30" />
 
             </LinearLayout>
@@ -63,8 +65,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Nasi Goreng Ayam 2x"
-                android:textSize="14dp"
+                android:text="Loading..."
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -73,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
-                android:text="Nasi Goreng Ayam 2x"
+
                 android:textSize="14dp"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -83,7 +85,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="+3 Menu lainnya"
                 android:textSize="12sp"
                 android:visibility="gone" />
 
@@ -104,7 +105,7 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="+3 Menu lainnya"
+                    android:text="Loading..."
                     android:textSize="14sp" />
 
                 <ImageView
@@ -124,7 +125,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="12dp"
                 android:layout_weight="1"
-                android:text="Rp 55.000"
+                android:text=""
                 android:textColor="@color/merah_gelap"
                 android:textSize="15sp"
                 android:textStyle="bold" />

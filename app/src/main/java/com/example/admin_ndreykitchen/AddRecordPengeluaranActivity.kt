@@ -1,6 +1,7 @@
 package com.example.admin_ndreykitchen
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -67,16 +68,38 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
 
         ///---date picker---
         val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.ENGLISH)
-        val currentDate = sdf.parse(sdf.format(System.currentTimeMillis())) //take current date
-        date = currentDate!!.time //initialized date value to current date as the default value
+        val currentDate = Calendar.getInstance().time // take current date without time
+        etDate.setText(sdf.format(currentDate)) // set the current date without time to EditText
+
+// Initialize date value to current date without time
+        date = currentDate.time
+
+// Set OnClickListener for the EditText to open the DatePickerDialog
         etDate.setOnClickListener {
             clickDatePicker()
         }
 
+
         //save record
         save_btn = findViewById(R.id.save_btn)
         save_btn.setOnClickListener{
-            savePengeluaranRecord()
+            val judulEditText = findViewById<EditText>(R.id.judul_edittext)
+            val jumlahPengeluaranEditText = findViewById<EditText>(R.id.jumlah_pengeluaran_editext)
+            val etCategory = findViewById<AutoCompleteTextView>(R.id.expense_category)
+            val etDate = findViewById<EditText>(R.id.tanggal_editext)
+
+            val judul = judulEditText.text.toString().trim()
+            val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString().trim()
+            val selectedCategory = etCategory.text.toString().trim()
+            val selectedDate = etDate.text.toString().trim()
+
+            if (judul.isEmpty() || jumlahPengeluaran.isEmpty() || selectedCategory.isEmpty() || selectedDate.isEmpty()) {
+                Toast.makeText(this@AddRecordPengeluaranActivity, "Input tidak boleh kosong", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            } else {
+                savePengeluaranRecord()
+            }
+
         }
 
         expense_category.setOnClickListener {
@@ -129,7 +152,9 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
         val month = myCalendar.get(Calendar.MONTH)
         val day = myCalendar.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(this,
+        val dpd = DatePickerDialog(
+            this,
+            R.style.MyDatePickerDialogStyle, // Apply custom style here
             { _, selectedYear, selectedMonth, selectedDayOfMonth ->
 
                 val selectedDate = "$selectedDayOfMonth/${selectedMonth + 1}/$selectedYear"
@@ -137,46 +162,79 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
 
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
                 val theDate = sdf.parse(selectedDate)
-                date = theDate!!.time //convert date to millisecond
+                date = theDate!!.time // Convert date to milliseconds
 
+                // Show TimePickerDialog after selecting the date
+                clickTimePicker()
             },
             year,
             month,
             day
         )
+
+        // Set the max date to today's date to prevent selecting future dates
+        dpd.datePicker.maxDate = System.currentTimeMillis()
+
         dpd.show()
     }
+
+    private fun clickTimePicker() {
+        val currentTime = Calendar.getInstance()
+        val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+        val minute = currentTime.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            R.style.MyTimePickerDialogStyle, // Apply custom style here
+            { _, selectedHour, selectedMinute ->
+                // Handle selected time
+                val selectedTime = String.format(Locale.getDefault(), "%02d:%02d", selectedHour, selectedMinute)
+                // Concatenate selected date and time
+                val selectedDateTime = "${etDate.text} $selectedTime"
+                // Set the concatenated value to the date EditText
+                etDate.setText(selectedDateTime)
+
+                // Optionally, you can also parse the selected date and time here
+                // and convert it to milliseconds if needed
+            },
+            hour,
+            minute,
+            true
+        )
+
+        timePickerDialog.show()
+    }
+
+
+
 
     fun savePengeluaranRecord() {
         val judulEditText = findViewById<EditText>(R.id.judul_edittext)
         val jumlahPengeluaranEditText = findViewById<EditText>(R.id.jumlah_pengeluaran_editext)
         val catatanEditText = findViewById<EditText>(R.id.catatan_edittext)
         val etCategory = findViewById<AutoCompleteTextView>(R.id.expense_category)
+        val etDate = findViewById<EditText>(R.id.tanggal_editext)
 
-        val judul = judulEditText.text.toString()
-        val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString()
-        val catatan = catatanEditText.text.toString()
-        val categoryAdapter = etCategory.adapter as ArrayAdapter<String>
-        val selectedCategory = categoryAdapter.getItem(categoryAdapter.getPosition(etCategory.text.toString()))
+        val judul = judulEditText.text.toString().trim()
+        val jumlahPengeluaran = jumlahPengeluaranEditText.text.toString().trim()
+        var catatan = catatanEditText.text.toString().trim()
+        val selectedCategory = etCategory.text.toString().trim()
+        val selectedDate = etDate.text.toString().trim()
 
+        if(catatan == "") {
+            catatan = "Tidak ada catatan"
+        }
 
-
-
-        val dateFromEditText = etDate.text.toString() // Get the selected date from etDate EditText
-
-        val sdf = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-        val currentTime = sdf.format(Calendar.getInstance().time) // Get the current time
-
-        val date = "$dateFromEditText $currentTime" // Combine date from EditText and current time
+        // Validate that all required fields are filled
 
 
+        // Proceed with saving the record
         val urlEndPoints = "https://ap-southeast-1.aws.data.mongodb-api.com/app/application-0-kofjt/endpoint/PostPengeluaran?title=" +
                 judul + "&amount=" +
                 jumlahPengeluaran + "&note=" +
                 catatan + "&date=" +
-                date + "&category=" +
+                selectedDate + "&category=" +
                 selectedCategory
-
 
         val sr = StringRequest(
             Request.Method.POST,
@@ -194,7 +252,7 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
                         // Registration successful
                         Toast.makeText(
                             this@AddRecordPengeluaranActivity,
-                            "Record has been added",
+                            "Pengeluaran telah ditambah",
                             Toast.LENGTH_SHORT
                         ).show()
 
@@ -205,12 +263,16 @@ class AddRecordPengeluaranActivity : AppCompatActivity() {
                 } catch (e: JSONException) {
                     // Handle JSON parsing error
                     e.printStackTrace()
-                    Toast.makeText(this@AddRecordPengeluaranActivity, "failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@AddRecordPengeluaranActivity, "Failed to save the record", Toast.LENGTH_SHORT).show()
                 }
+            },
+            {
+                Toast.makeText(this@AddRecordPengeluaranActivity, "Registration failed", Toast.LENGTH_SHORT).show()
             }
-        ) { Toast.makeText(this@AddRecordPengeluaranActivity, "Registration failed", Toast.LENGTH_SHORT).show() }
+        )
 
         val requestQueue = Volley.newRequestQueue(applicationContext)
         requestQueue.add(sr)
     }
+
 }
