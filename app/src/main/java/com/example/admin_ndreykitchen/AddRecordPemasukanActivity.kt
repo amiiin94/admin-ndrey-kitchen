@@ -149,11 +149,11 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
 //                        Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         // Registration successful
-                        Toast.makeText(
-                            this@AddRecordPemasukanActivity,
-                            "record id have been added",
-                            Toast.LENGTH_SHORT
-                        ).show()
+//                        Toast.makeText(
+//                            this@AddRecordPemasukanActivity,
+//                            "record id have been added",
+//                            Toast.LENGTH_SHORT
+//                        ).show()
                     }
                     putAmount(totalHarga)
                     postItemsWithQuantity()
@@ -180,7 +180,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
             { response ->
                 if (response == "\"Total harga updated successfully for the last document.\"") {
                     // Update successful
-                    Toast.makeText(this@AddRecordPemasukanActivity, "Amount Updated", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(this@AddRecordPemasukanActivity, "Amount Updated", Toast.LENGTH_SHORT).show()
 
                     // Redirect to the main activity
                     val mainActivityIntent = Intent(this@AddRecordPemasukanActivity, MainActivity::class.java)
@@ -218,7 +218,7 @@ class AddRecordPemasukanActivity : AppCompatActivity(), AddTransactionAdapter.Qu
                         Toast.makeText(this@AddRecordPemasukanActivity, errorMessage, Toast.LENGTH_SHORT).show()
                     } else {
                         // Post successful
-                        Toast.makeText(this@AddRecordPemasukanActivity, "Pemasukan telah ditambah", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(this@AddRecordPemasukanActivity, "Pemasukan telah ditambah", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: JSONException) {
                     // Handle JSON parsing error

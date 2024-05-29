@@ -48,8 +48,9 @@ class RecordAdapter(private var recordList: List<RecordModel>, private val itemL
         // Find the corresponding ItemModel based on the record_id
         val correspondingItem = itemList.find { it.record_id == record.id_record }
 
+
         // Set item name
-//        holder.item?.text = correspondingItem?.item ?: "Item not found"
+        holder.item?.text = correspondingItem?.item ?: "Item not found"
 
         // Get the quantity of the first item
         val firstItemQuantity = itemList.firstOrNull { it.record_id == record.id_record }?.quantity
